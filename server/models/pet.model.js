@@ -1,7 +1,6 @@
 const mongoose = require('mongoose')
 
 const Pet = new mongoose.Schema({
-    ownerId: String,
     name: String
 },
 {collection: 'pets'})
