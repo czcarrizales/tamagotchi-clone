@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const User = require('./models/user.model')
+const Pet = require('./models/pet.model')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 
@@ -72,6 +73,19 @@ app.post('/api/quote', async (req, res) => {
     } catch(error) {
         console.log(error)
         res.json({status: 'error', error: 'invalid token'})
+    }
+})
+
+app.post('/api/pet', async (req, res) => {
+    console.log(req.body)
+    try {
+        await Pet.create({
+            name: req.body.name
+        })
+        await User.updateOne({email: 'rc@rc.com'}, {$set: {pet: '63bcaf937ade95e8a600c552'}})
+        res.json({status: 'ok'})
+    } catch (err) {
+        console.log('error', err)
     }
 })
 
