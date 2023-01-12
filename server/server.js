@@ -39,8 +39,6 @@ app.post('/api/login', async (req, res) => {
             const token = jwt.sign({
                 email: req.body.email
             }, 'secret123')
-            console.log(req)
-            console.log(res)
             return res.json({status: 'ok, found a matching email and password', user: token})
         } else {
             return res.json({status: 'error, email and/or password do not exist or match', user: false})
@@ -67,8 +65,6 @@ app.post('/api/quote', async (req, res) => {
     const decoded = jwt.verify(token, 'secret123')
     const email = decoded.email
     await User.updateOne({email: email}, {$set: {quote: req.body.quote}})
-    console.log(req)
-    console.log(res)
     return res.json({status: 'ok'})
     } catch(error) {
         console.log(error)
@@ -77,12 +73,17 @@ app.post('/api/quote', async (req, res) => {
 })
 
 app.post('/api/pet', async (req, res) => {
-    console.log(req.body)
+    const token = req.headers.authorization.split(' ')[1]
+    console.log(token)
     try {
-        await Pet.create({
-            name: req.body.name
+        const decoded = jwt.verify(token, 'secret123')
+        const pet = await Pet.create({
+            name: req.body.name,
+            personality: req.body.personality
         })
-        await User.updateOne({email: 'rc@rc.com'}, {$set: {pet: '63bcaf937ade95e8a600c552'}})
+        console.log(decoded)
+        console.log(pet)
+        await User.updateOne({email: decoded.email}, {$set: {pet: pet._id}})
         res.json({status: 'ok'})
     } catch (err) {
         console.log('error', err)
