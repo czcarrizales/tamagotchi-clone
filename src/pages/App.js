@@ -5,12 +5,14 @@ import Login from './Login'
 import Register from './Register'
 import Dashboard from './Dashboard'
 import ViewPet from './ViewPet'
+import Navbar from './Navbar'
 
 function App() {
 
   return (
     <div>
       <h1>Tamagotchi Clone</h1>
+      <Navbar/>
       <BrowserRouter>
         <Routes>
           <Route path="/login" exact element={<Login/>} />
