@@ -38,7 +38,8 @@ app.post('/api/login', async (req, res) => {
             console.log(user)
             const token = jwt.sign({
                 email: req.body.email,
-                name: user.name
+                name: user.name,
+                pet: user.pet
             }, 'secret123')
             return res.json({status: 'ok, found a matching email and password', user: token})
         } else {
@@ -73,6 +74,21 @@ app.post('/api/quote', async (req, res) => {
     }
 })
 
+app.get('/api/pet', async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1]
+    try {
+    const decoded = jwt.verify(token, 'secret123')
+    const email = decoded.email
+    const user = await User.findOne({email: email})
+    const pet = await Pet.findById(user.pet)
+
+    return res.json({status: 'ok', pet: pet})
+    } catch(error) {
+        console.log(error)
+        res.json({status: 'error', error: 'invalid token'})
+    }
+})
+
 app.post('/api/pet', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1]
     console.log(token)
@@ -81,7 +97,8 @@ app.post('/api/pet', async (req, res) => {
         const pet = await Pet.create({
             name: req.body.name,
             personality: req.body.personality,
-            happiness: 100
+            happiness: 100,
+            adoptable: false
         })
         console.log(decoded)
         console.log(pet)
