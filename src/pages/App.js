@@ -1,6 +1,7 @@
 import "../App.css";
 import {useState} from 'react'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import jwtDecode from 'jwt-decode'
 import Login from './Login'
 import Register from './Register'
 import Dashboard from './Dashboard'
@@ -9,9 +10,12 @@ import Navbar from './Navbar'
 
 function App() {
 
+  const token = localStorage.getItem('token')
+  const decodedToken = jwtDecode(token)
+
   return (
     <div>
-      <h1>Tamagotchi Clone</h1>
+      <h1>Welcome {decodedToken.name}!</h1>
       <Navbar/>
       <BrowserRouter>
         <Routes>

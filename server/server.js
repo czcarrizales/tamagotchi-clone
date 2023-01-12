@@ -35,9 +35,10 @@ app.post('/api/login', async (req, res) => {
         const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
 
         if (isPasswordValid) {
-
+            console.log(user)
             const token = jwt.sign({
-                email: req.body.email
+                email: req.body.email,
+                name: user.name
             }, 'secret123')
             return res.json({status: 'ok, found a matching email and password', user: token})
         } else {
