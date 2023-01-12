@@ -124,6 +124,17 @@ app.put('/api/pet', async(req, res) => {
     }
 })
 
+app.get('/api/adoptable-pets', async (req, res) => {
+    Pet.find({adoptable: true}, (error, data) => {
+        if (error) {
+            res.send(error)
+        } else {
+            res.json(data)
+        }
+    })
+    console.log('found adoptable pets')
+})
+
 app.get('', (req, res) => {
     res.send('hello world')
 })
