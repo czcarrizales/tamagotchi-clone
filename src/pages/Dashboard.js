@@ -106,7 +106,7 @@ function Dashboard() {
 
   return (
     <div>
-      <h1>Your quote: {quote || "YOU DO NOT HAVE A GOT DANG QUOTE!!!"}</h1>
+      {/* <h1>Your quote: {quote || "YOU DO NOT HAVE A GOT DANG QUOTE!!!"}</h1>
       <form onSubmit={updateQuote}>
         <input
           type="text"
@@ -117,7 +117,7 @@ function Dashboard() {
         ></input>
         <input type="submit" value="update quote"></input>
       </form>
-      <br/>
+      <br/> */}
       <h2>Generate a random pet and adopt it!</h2>
       <input type="text" placeholder="pet name" name="name" value={petName} onChange={handlePetNameChange}></input>
       <select onChange={handlePetPersonalityChange} value={petPersonality}>
