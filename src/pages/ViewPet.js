@@ -26,6 +26,14 @@ function ViewPet() {
         })
     }, [])
 
+    function putUpForAdoption() {
+        authAxios.put('http://localhost:5000/api/pet')
+            .then((req, res) => {
+                console.log(req)
+            })
+        console.log('put up your pet for adoption!')
+    }
+
 
     console.log(token)
     console.log(decodedToken)
@@ -44,7 +52,11 @@ function ViewPet() {
             Happiness: {petData.happiness}
             <br/>
             Up for adoption? {String(petData.adoptable)}
-            </div>}
+            <br/>
+            <button onClick={putUpForAdoption}>Put up for adoption</button>
+            </div>
+            
+            }
     </div>
   );
 }
