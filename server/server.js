@@ -80,7 +80,8 @@ app.post('/api/pet', async (req, res) => {
         const decoded = jwt.verify(token, 'secret123')
         const pet = await Pet.create({
             name: req.body.name,
-            personality: req.body.personality
+            personality: req.body.personality,
+            happiness: 100
         })
         console.log(decoded)
         console.log(pet)

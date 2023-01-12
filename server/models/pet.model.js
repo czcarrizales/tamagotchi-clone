@@ -2,7 +2,8 @@ const mongoose = require('mongoose')
 
 const Pet = new mongoose.Schema({
     name: String,
-    personality: String
+    personality: String,
+    happiness: Number
 },
 {collection: 'pets'})
 
