@@ -109,6 +109,21 @@ app.post('/api/pet', async (req, res) => {
     }
 })
 
+app.put('/api/pet', async(req, res) => {
+    const token = req.headers.authorization.split(' ')[1]
+    try {
+    const decoded = jwt.verify(token, 'secret123')
+    const email = decoded.email
+    const user = await User.findOne({email: email})
+    const pet = await Pet.findByIdAndUpdate(user.pet, {adoptable: true})
+
+    return res.json({status: 'ok', pet: pet})
+    } catch(error) {
+        console.log(error)
+        res.json({status: 'error', error: 'invalid token'})
+    }
+})
+
 app.get('', (req, res) => {
     res.send('hello world')
 })
