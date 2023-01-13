@@ -116,6 +116,8 @@ app.put('/api/pet', async(req, res) => {
     const email = decoded.email
     const user = await User.findOne({email: email})
     const pet = await Pet.findByIdAndUpdate(user.pet, {adoptable: true})
+    User.findOneAndUpdate({email: user.email}, {pet: null})
+        .then(console.log('removed pet from user'))
 
     return res.json({status: 'ok', pet: pet})
     } catch(error) {
@@ -133,6 +135,11 @@ app.get('/api/adoptable-pets', async (req, res) => {
         }
     })
     console.log('found adoptable pets')
+})
+
+app.put('/raise-happiness', async (req, res) => {
+    Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {happiness: 1}})
+        .then('raised happiness!')
 })
 
 app.get('', (req, res) => {
