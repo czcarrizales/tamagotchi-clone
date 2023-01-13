@@ -8,6 +8,7 @@ import Dashboard from './Dashboard'
 import ViewPet from './ViewPet'
 import Navbar from './Navbar'
 import Adopt from './Adopt'
+import Play from './Play'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
           <Route path="/dashboard" exact element={<Dashboard/>}/>
           <Route path="/view-pet" exact element={<ViewPet />} />
           <Route path="/adopt" exact element={<Adopt />} />
+          <Route path="/play" exact element={<Play />} />
         </Routes>
         
       </BrowserRouter>
