@@ -6,7 +6,6 @@ function ViewPet() {
 
     const token = localStorage.getItem('token')
     const decodedToken = jwtDecode(token)
-    const petId = decodedToken.pet
     const [petData, setPetData] = useState()
 
     const authAxios = axios.create({
@@ -57,6 +56,7 @@ function ViewPet() {
             </div>
             
             }
+        {petData == undefined && <div>You have no pets! Go adopt one!</div>}
     </div>
   );
 }
