@@ -9,6 +9,7 @@ function Navbar() {
     <div>
         <ul>
             <li><a href="/dashboard">Home</a></li>
+            <li><a href="/play">Play</a></li>
             <li><a href="/view-pet">Pet</a></li>
             <li><a href="/adopt">Adopt</a></li>
             <li><a href="/login">Login</a></li>
