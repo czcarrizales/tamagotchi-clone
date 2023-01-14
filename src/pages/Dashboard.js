@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import '../styles/Dashboard.css'
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -9,6 +10,7 @@ function Dashboard() {
   const [tempQuote, setTempQuote] = useState("");
   const [petName, setPetName] = useState('')
   const [petPersonality, setPetPersonality] = useState('')
+  const [petImage, setPetImage] = useState('')
   const accessToken = localStorage.getItem('token')
 
   axios.interceptors.request.use(
@@ -95,9 +97,15 @@ function Dashboard() {
     console.log(event.target.value)
   }
 
+  function handlePetImageChange(event) {
+    setPetImage(event.target.value)
+    console.log(event.target.value)
+    console.log(petImage)
+  }
+
   function adopt() {
     console.log('adopted pet!')
-    authAxios.post('/api/pet', {name: petName, personality: petPersonality})
+    authAxios.post('/api/pet', {name: petName, personality: petPersonality, imageSrc: petImage})
         .then((res) => {
             console.log(res)
         })
@@ -105,7 +113,7 @@ function Dashboard() {
   }
 
   return (
-    <div>
+    <div className="dashboard-container">
       {/* <h1>Your quote: {quote || "YOU DO NOT HAVE A GOT DANG QUOTE!!!"}</h1>
       <form onSubmit={updateQuote}>
         <input
@@ -119,12 +127,26 @@ function Dashboard() {
       </form>
       <br/> */}
       <h2>Generate a random pet and adopt it!</h2>
-      <input type="text" placeholder="pet name" name="name" value={petName} onChange={handlePetNameChange}></input>
+      <h3>Choose a name for your pet!</h3>
+      <input type="text" placeholder="Name" name="name" value={petName} onChange={handlePetNameChange}></input>
+      <br/>
+      <h3>Choose a personality for your pet!</h3>
       <select onChange={handlePetPersonalityChange} value={petPersonality}>
         <option value="brave">Brave</option>
         <option value="intelligent">Intelligent</option>
         <option value="mischevious">Mischevious</option>
       </select>
+      <br/>
+      <h3>Select an image for your pet!</h3>
+      <input type="radio" value="images/dog.png" name="petBody" onChange={handlePetImageChange}></input>
+      <label>
+        <img src="images/dog.png"></img>
+      </label>
+      <input type="radio" value="images/cat.png" name="petBody" onChange={handlePetImageChange}></input>
+      <label>
+      <img src="images/cat.png"></img>
+      </label>
+      <br/>
       <button onClick={adopt}>Adopt!</button>
     </div>
   );
