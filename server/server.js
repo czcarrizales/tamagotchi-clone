@@ -115,6 +115,7 @@ app.post('/api/pet', async (req, res) => {
             name: req.body.name,
             personality: req.body.personality,
             happiness: 100,
+            hunger: 100,
             adoptable: false
         })
         console.log(decoded)
