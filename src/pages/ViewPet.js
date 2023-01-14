@@ -47,6 +47,8 @@ function ViewPet() {
     <div className="view-pet-container">
         <h1>Viewing Pet</h1>
         {petData && <div>
+            <img src={petData.imageSrc}></img>
+            <br/>
             {petData.name}
             <br/>
             Personality: {petData.personality}
