@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import '../styles/Adopt.css'
 
 function Adopt() {
 
@@ -30,9 +31,13 @@ useEffect(() => {
   return (
     <div>
         <h1>You can view adoptable pets here.</h1>
-        {adoptablePets && <div>
+        {adoptablePets && <div className="all-adoptable-pets-container">
           {adoptablePets.map(pet => {
-            return (<div id={pet._id} key={pet._id}>{pet.name}</div>)
+            return (<div className="adoptable-pet" id={pet._id} key={pet._id}>
+              <h2>{pet.name}</h2>
+              <p>Personality: {pet.personality}</p>
+              <button>Adopt!</button>
+              </div>)
           })}
           </div>}
     </div>

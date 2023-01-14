@@ -1,0 +1,17 @@
+.adoptable-pet {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid;
+    min-height: 150px;
+    min-width: 150px;
+    font-size: 20px;
+    margin: 20px;
+}
+
+.all-adoptable-pets-container {
+    display: flex;
+    flex-wrap: wrap;
+    border: 1px solid red;
+}
