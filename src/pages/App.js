@@ -12,12 +12,16 @@ import Play from './Play'
 
 function App() {
 
-  const token = localStorage.getItem('token')
-  const decodedToken = jwtDecode(token)
+  // const token = localStorage.getItem('token') ? localStorage.getItem('token') == true : null
+  // const decodedToken = jwtDecode(token)
+  // const isAuthenticated = token !== null
+  // console.log(decodedToken)
+  // console.log(isAuthenticated)
+  // CREATES ERROR. NOT SURE WHY, BUT WILL FIX LATER.
 
   return (
     <div>
-      <h1>Welcome {decodedToken.name}!</h1>
+      <h1>Welcome!</h1>
       <Navbar/>
       <BrowserRouter>
         <Routes>

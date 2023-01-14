@@ -4,6 +4,7 @@ const Pet = new mongoose.Schema({
     name: String,
     personality: String,
     happiness: Number,
+    hunger: Number,
     adoptable: Boolean
 },
 {collection: 'pets'})

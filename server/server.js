@@ -5,6 +5,17 @@ const mongoose = require('mongoose')
 const User = require('./models/user.model')
 const Pet = require('./models/pet.model')
 const jwt = require('jsonwebtoken')
+const redis = require('redis')
+const JWTR = require('jwt-redis').default
+const redisClient = redis.createClient()
+redisClient.connect()
+redisClient.on('connect', () => {
+    console.log('Client is connected to redis')
+})
+redisClient.on('error', err => {
+    console.log('error ' + err)
+})
+const jwtr = new JWTR(redisClient)
 const bcrypt = require('bcryptjs')
 
 app.use(cors())
@@ -33,15 +44,21 @@ app.post('/api/login', async (req, res) => {
         })
 
         const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
+        console.log(isPasswordValid, 'password')
+
+        jwtr.sign({hehe: 'he'}, 'yoyo').then((data) => {
+            console.log(data, 'testing')
+            return data
+        })
 
         if (isPasswordValid) {
-            console.log(user)
-            const token = jwt.sign({
-                email: req.body.email,
-                name: user.name,
-                pet: user.pet
+            jwtr.sign({
+                email: req.body.email
             }, 'secret123')
-            return res.json({status: 'ok, found a matching email and password', user: token})
+            .then((token) => {
+                return res.json({status: 'ok, found a matching email and password', user: token})
+            })
+            
         } else {
             return res.json({status: 'error, email and/or password do not exist or match', user: false})
         }

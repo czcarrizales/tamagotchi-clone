@@ -1,5 +1,6 @@
 import {useState} from 'react'
 import { useNavigate } from 'react-router-dom'
+import '../styles/Register.css'
 
 function Register() {
 
@@ -40,7 +41,7 @@ function Register() {
   }
 
   return (
-    <div>
+    <div className='register-container'>
       <h1>Register</h1>
       <form onSubmit={registerUser}>
         <input type="text" name="name" placeholder="name" value={registerState.name} onChange={handleChange}></input>

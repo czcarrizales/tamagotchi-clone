@@ -35,6 +35,9 @@ function Play() {
   return (
     <div>
         <h1>Play with your pet here!</h1>
+        {petData && <div>
+            Your pet's happiness is currently at {petData.happiness}
+            </div>}
         <button onClick={raiseHappiness}>Click to raise happiness!</button>
     </div>
   );

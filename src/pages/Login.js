@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import '../styles/Login.css'
 
 function Login() {
 
@@ -39,7 +40,7 @@ function Login() {
   }
 
   return (
-    <div>
+    <div className='login-container'>
       <h1>Login</h1>
       <form onSubmit={loginUser}>
         <input type="email" name="email" placeholder="email" value={registerState.email} onChange={handleChange}></input>
