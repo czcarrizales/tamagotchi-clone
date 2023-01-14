@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
+import '../styles/ViewPet.css'
 
 function ViewPet() {
 
@@ -33,15 +34,17 @@ function ViewPet() {
         console.log('put up your pet for adoption!')
     }
 
-
-    console.log(token)
-    console.log(decodedToken)
-    console.log(petData)
-
-    
+    function raiseHunger() {
+        authAxios.put('http://localhost:5000/raise-hunger', {_id: petData._id})
+            .then((req, res) => {
+                console.log(res)
+                console.log('hunger raised!')
+            })
+        console.log('hunger raised!')
+    }
 
   return (
-    <div>
+    <div className="view-pet-container">
         <h1>Viewing Pet</h1>
         {petData && <div>
             {petData.name}
@@ -50,9 +53,13 @@ function ViewPet() {
             <br/>
             Happiness: {petData.happiness}
             <br/>
+            Hunger: {petData.hunger}
+            <br/>
             Up for adoption? {String(petData.adoptable)}
             <br/>
             <button onClick={putUpForAdoption}>Put up for adoption</button>
+            <br/>
+            <button onClick={raiseHunger}>Feed</button>
             </div>
             
             }
