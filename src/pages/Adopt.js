@@ -29,7 +29,7 @@ useEffect(() => {
 
 
   return (
-    <div>
+    <div className="adopt-component-container">
         <h1>You can view adoptable pets here.</h1>
         {adoptablePets && <div className="all-adoptable-pets-container">
           {adoptablePets.map(pet => {
