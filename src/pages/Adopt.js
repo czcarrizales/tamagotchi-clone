@@ -34,6 +34,7 @@ useEffect(() => {
         {adoptablePets && <div className="all-adoptable-pets-container">
           {adoptablePets.map(pet => {
             return (<div className="adoptable-pet" id={pet._id} key={pet._id}>
+              <img src={pet.imageSrc}></img>
               <h2>{pet.name}</h2>
               <p>Personality: {pet.personality}</p>
               <button>Adopt!</button>
