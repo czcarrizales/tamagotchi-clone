@@ -1,12 +1,26 @@
+import { Navigate } from 'react-router-dom'
 import {useState} from 'react'
+import jwtDecode from 'jwt-decode'
+
 import '../styles/Login.css'
 
 function Login() {
+
+  const token = localStorage.getItem('token')
 
   const [registerState, setRegisterState] = useState({
     email: '',
     password: ''
   })
+
+  if(jwtDecode(token).exp * 1000 > Date.now()) {
+    return <Navigate to="/view-pet" />
+    console.log('you are already logged in my dude')
+  } else {
+    console.log('they are not logged in')
+  }
+
+  
 
   async function loginUser(event) {
     event.preventDefault()
