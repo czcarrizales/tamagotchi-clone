@@ -1,5 +1,5 @@
 import {useState} from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Navigate } from 'react-router-dom'
 import '../styles/Register.css'
 
 function Register() {
@@ -11,6 +11,15 @@ function Register() {
     email: '',
     password: ''
   })
+
+  const token = localStorage.getItem('token')
+
+  if(token) {
+    return <Navigate to="/view-pet" />
+    console.log('you are already logged in my dude')
+  } else {
+    console.log('they are not logged in')
+  }
 
   async function registerUser(event) {
     event.preventDefault()
