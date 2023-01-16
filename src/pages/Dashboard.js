@@ -12,6 +12,8 @@ function Dashboard() {
   const [petPersonality, setPetPersonality] = useState('')
   const [petImage, setPetImage] = useState('')
   const accessToken = localStorage.getItem('token')
+  const decodedToken = jwtDecode(accessToken)
+  console.log(decodedToken.pet, 'user pet token')
 
   axios.interceptors.request.use(
     config => {
