@@ -39,7 +39,7 @@ app.post('/api/login', async (req, res) => {
                 email: req.body.email,
                 name: user.name,
                 pet: user.pet
-            }, 'secret123')
+            }, 'secret123', {expiresIn: 60 * 10})
             return res.json({status: 'ok, found a matching email and password', user: token})
             
         } else {
@@ -120,7 +120,6 @@ app.put('/api/pet', async(req, res) => {
     const pet = await Pet.findByIdAndUpdate(user.pet, {adoptable: true})
     User.findOneAndUpdate({email: user.email}, {pet: null})
         .then(console.log('removed pet from user'))
-
     return res.json({status: 'ok', pet: pet})
     } catch(error) {
         console.log(error)
@@ -147,6 +146,25 @@ app.put('/raise-happiness', async (req, res) => {
 app.put('/raise-hunger', async (req, res) => {
     Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {hunger: 1}})
         .then('raised hunger!')
+})
+
+app.put('/adopt-pet', async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1]
+    try {
+    const decoded = jwt.verify(token, 'secret123')
+    const email = decoded.email
+    const user = await User.findOne({email: email})
+    if (user.pet == null) {
+        await User.findOneAndUpdate({email: email}, {pet: req.body._id})
+        const pet = await Pet.findByIdAndUpdate(req.body._id, {adoptable: false})
+        console.log('user adopted this pet!')
+    } else {
+        console.log('yo, this guy already has a pet!')
+    }
+    
+    } catch {
+        console.log('error!')
+    }
 })
 
 app.get('', (req, res) => {
