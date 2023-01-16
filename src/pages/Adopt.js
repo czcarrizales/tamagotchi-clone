@@ -27,6 +27,17 @@ useEffect(() => {
     })
 }, [])
 
+function adoptPet(petId) {
+  authAxios.put(`http://localhost:5000/adopt-pet`, {_id: petId})
+    .then((req, res) => {
+        console.log(req, res)
+    })
+    .catch((err) => {
+      console.log(err)
+    })
+  console.log(petId)
+}
+
 
   return (
     <div className="adopt-component-container">
@@ -37,7 +48,7 @@ useEffect(() => {
               <img src={pet.imageSrc}></img>
               <h2>{pet.name}</h2>
               <p>Personality: {pet.personality}</p>
-              <button>Adopt!</button>
+              <button onClick={() => adoptPet(pet._id)}>Adopt!</button>
               </div>)
           })}
           </div>}
