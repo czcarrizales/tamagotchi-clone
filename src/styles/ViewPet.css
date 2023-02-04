@@ -1,25 +1,31 @@
 .view-pet-container {
     text-align: center;
-    margin: 0 100px;
-    height: 700px;
-    color: white;
+    height: 100%;
+    width: 100%;
+}
+
+.view-pet-container span {
+    background-color: inherit;
 }
 
 .view-pet-container h1 {
     color: black;
-    font-size: 40px;
+    font-size: 2.5rem;
+    margin-top: 1em;
 }
 
 .view-pet-container button {
     color: black;
-    background-color: rgb(255, 255, 255);
+    background: linear-gradient(#ffffff, #FFEEB2);
     border: none;
     border-radius: 50px;
-    height: 50px;
-    width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-    margin-top: 2em;
+    height: 80px;
+    width: 75%;
+    font-size: 1.6rem;
+    font-weight: 800;
+    font-family: 'Nunito';
+    margin-top: 1em;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, .2);
 }
 
 .view-pet-container button:hover {
@@ -28,31 +34,40 @@
 }
 
 .view-pet-container img {
-    height: 300px;
-    border-radius: 200px;
-    border: 5px solid black;
+    width: 80%;
+    margin: auto;
+    margin-top: 1em;
+    border-radius: 50%;
+    box-shadow: 0px 4px 10px 0px rgb(137, 136, 129);
 }
 
 .pet-stats-container {
     display: flex;
-    justify-content: space-around;
-    width: 50%;
-    margin: auto;
+    justify-content: center;
+    align-items: center;
     font-size: 30px;
+    margin-top: 1em;
 }
 
 .pet-stat {
+    width: 30vw;
+    height: 30vw;
+    border-radius: 50%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 2px solid black;
-    border-radius: 50px;
-    background-color: #18a8a6;
     font-weight: bolder;
-    text-shadow: 2px 2px black;
-    margin: 0 50px;
-    min-height: 50px;
     text-align: center;
-    width: 200px;
-    min-width: 200px;
+    margin: 0 .5em;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, .2);
+    background: linear-gradient(#ffffff, #fff9e2);
+}
+
+.pet-stat-heart {
+    color: red;
+}
+
+.view-pet-buttons-container {
+    margin-bottom: 3em;
 }

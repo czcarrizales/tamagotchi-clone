@@ -1,0 +1,19 @@
+.navbar-container {
+    display: flex;
+}
+
+.navbar-ul-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+
+.navbar-ul-container li, a {
+    list-style: none;
+    text-decoration: none;
+    color: black;
+}
+
+.navbar-ul-container li:hover, a:hover {
+    scale: 1.2;
+}
