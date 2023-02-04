@@ -13,12 +13,16 @@ function Login() {
     password: ''
   })
 
-  if(jwtDecode(token).exp * 1000 > Date.now()) {
-    return <Navigate to="/view-pet" />
-    console.log('you are already logged in my dude')
-  } else {
-    console.log('they are not logged in')
+  if (token) {
+    if(jwtDecode(token).exp * 1000 > Date.now()) {
+      return <Navigate to="/view-pet" />
+      console.log('you are already logged in my dude')
+    } else {
+      console.log('they are not logged in')
+    }
   }
+
+  
 
   
 
@@ -40,7 +44,7 @@ function Login() {
     if (data.user) {
       localStorage.setItem('token', data.user)
       alert('login success!')
-      window.location.href = '/dashboard'
+      window.location.href = '/view-pet'
     } else {
       alert('yo man, check yo email and password, ya hear?')
     }
