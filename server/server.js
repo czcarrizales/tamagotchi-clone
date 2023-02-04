@@ -39,12 +39,32 @@ app.post('/api/login', async (req, res) => {
                 email: req.body.email,
                 name: user.name,
                 pet: user.pet
-            }, 'secret123', {expiresIn: 60 * 10})
+            }, 'secret123', {expiresIn: "30m"})
             return res.json({status: 'ok, found a matching email and password', user: token})
             
         } else {
             return res.json({status: 'error, email and/or password do not exist or match', user: false})
         }
+})
+
+app.get('/logout', async (req, res) => {
+    res.cookie('jwt', '', {maxAge: 1})
+    res.redirect('/')
+    console.log('logged out!')
+})
+
+app.get('/api/user-data', async (req, res) => {
+    const token = req.headers.authorization.split(' ')[1]
+    try {
+    const decoded = jwt.verify(token, 'secret123')
+    const email = decoded.email
+    const user = await User.findOne({email: email})
+
+    return res.json({status: 'ok', user: user})
+    } catch(error) {
+        console.log(error)
+        res.json({status: 'error', error: 'invalid token'})
+    }
 })
 
 app.get('/api/quote', async (req, res) => {
@@ -139,13 +159,24 @@ app.get('/api/adoptable-pets', async (req, res) => {
 })
 
 app.put('/raise-happiness', async (req, res) => {
-    Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {happiness: 1}})
-        .then('raised happiness!')
+    try {
+        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {happiness: 1}})
+        res.send(response)
+        console.log(response)
+    } catch (err) {
+        console.log(err)
+    }
+    
 })
 
 app.put('/raise-hunger', async (req, res) => {
-    Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {hunger: 1}})
-        .then('raised hunger!')
+    try {
+        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {hunger: 1}})
+        res.send(response)
+        console.log(response)
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 app.put('/adopt-pet', async (req, res) => {
