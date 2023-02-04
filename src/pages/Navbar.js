@@ -1,49 +1,99 @@
 import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
+import "../styles/Navbar.css";
+import axios from "axios";
 
 function Navbar() {
-  
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem("token");
 
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState(null);
 
-  console.log(jwtDecode(token))
-  console.log(Date.now())
-
-  useEffect(() => {
-
-    console.log('user data updated')
-  }, [])
-
-  function isLoggedIn() {
-    if (jwtDecode(token).exp * 1000 < Date.now()) {
-      return (
-        <div>
-        <li><a href="/login">Login</a></li>
-            <li><a href="/register">Register</a></li>
-        </div>
-      )
-    } else {
-      return (
-        <div>
-          <li><a href="#">Logout</a></li>
-        </div>
-      )
-    }
+  let decodedToken;
+  if (token) {
+    decodedToken = jwtDecode(token);
+    axios.interceptors.request.use((config) => {
+      config.headers.authorization = `Bearer ${token}`;
+      return config;
+    });
   }
 
   
 
+  const authAxios = axios.create({
+    baseURL: "http://localhost:5000",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  useEffect(() => {
+    async function fetchUserData() {
+      await authAxios.get("/api/user-data").then((res) => {
+        setUserData(res.data.user);
+      });
+    }
+    fetchUserData();
+    console.log("fetched user data");
+    return () => {};
+  }, []);
+
+  function logout() {
+    localStorage.clear()
+    axios.get('http://localhost:5000/logout')
+      .then(console.log('logged out from front end'))
+  }
+
+  function isLoggedIn() {
+    if (token) {
+      if (jwtDecode(token).exp * 1000 < Date.now()) {
+        return (
+          <div>
+            <li>
+              <a href="/login">Login</a>
+            </li>
+            <li>
+              <a href="/register">Register</a>
+            </li>
+          </div>
+        );
+      } else {
+        return (
+          <div>
+            <li>
+              <a href="#" onClick={logout}>Logout</a>
+            </li>
+          </div>
+        );
+      }
+    }
+  }
+
+  function hasPet() {
+    if (token && userData) {
+      if (userData.pet === null) {
+        return (
+          <div>
+            <li>
+              <a href="/create-pet">Create</a>
+            </li>
+          </div>
+        );
+      }
+    }
+  }
 
   return (
-    <div>
-        <ul>
-            <li><a href="/dashboard">Home</a></li>
-            <li><a href="/play">Play</a></li>
-            <li><a href="/view-pet">Pet</a></li>
-            <li><a href="/adopt">Adopt</a></li>
-            {isLoggedIn()}
-        </ul>
+    <div className="navbar-container">
+      <ul className="navbar-ul-container">
+        {hasPet()}
+        <li>
+          <a href="/view-pet">Pet</a>
+        </li>
+        <li>
+          <a href="/adopt">Adopt</a>
+        </li>
+        {isLoggedIn()}
+      </ul>
     </div>
   );
 }
