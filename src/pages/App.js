@@ -1,34 +1,60 @@
 import "../App.css";
-import {useState} from 'react'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
-import jwtDecode from 'jwt-decode'
-import Login from './Login'
-import Register from './Register'
-import Dashboard from './Dashboard'
-import ViewPet from './ViewPet'
-import Navbar from './Navbar'
-import Adopt from './Adopt'
-import Play from './Play'
+import { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import jwtDecode from "jwt-decode";
+import Login from "./Login";
+import Register from "./Register";
+import CreatePet from "./CreatePet";
+import ViewPet from "./ViewPet";
+import Navbar from "./Navbar";
+import Adopt from "./Adopt";
+import Play from "./Play";
+import axios from "axios";
 
 function App() {
+  const token = localStorage.getItem("token");
+  let decodedToken;
+  if (token) {
+    decodedToken = jwtDecode(token);
+  }
 
-  const token = localStorage.getItem('token')
-  const decodedToken = jwtDecode(token)
+  // axios.interceptors.request.use((config) => {
+  //   config.headers.authorization = `Bearer ${token}`;
+  //   return config;
+  // });
+
+  // const authAxios = axios.create({
+  //   baseURL: "http://localhost:5000",
+  //   headers: {
+  //     Authorization: `Bearer ${token}`,
+  //   },
+  // });
+
+  
+
+  // useEffect(() => {
+  //   authAxios.get("/api/user-data").then((res) => {
+  //     console.log(res.data.user, "user data fetched");
+  //     console.log(res.data.user.pet === null)
+  //   });
+  //   console.log('user data fetched')
+  // }, [])
 
   return (
-    <div>
-      <h1>Welcome {decodedToken.name}!</h1>
-      <Navbar/>
+    <div className="app-container">
+      <h1 className="app-welcome">
+        Welcome {decodedToken && decodedToken.name}!
+      </h1>
+      <Navbar />
       <BrowserRouter>
         <Routes>
-          <Route path="/login" exact element={<Login/>} />
-          <Route path="/register" exact element={<Register/>} />
-          <Route path="/dashboard" exact element={<Dashboard/>}/>
+          <Route path="/login" exact element={<Login />} />
+          <Route path="/register" exact element={<Register />} />
+          <Route path="/create-pet" exact element={<CreatePet />} />
           <Route path="/view-pet" exact element={<ViewPet />} />
           <Route path="/adopt" exact element={<Adopt />} />
-          <Route path="/play" exact element={<Play />} />
+          {/* <Route path="/play" exact element={<Play />} /> */}
         </Routes>
-        
       </BrowserRouter>
     </div>
   );
