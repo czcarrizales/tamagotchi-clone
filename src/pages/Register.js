@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import '../styles/Register.css'
+import jwtDecode from 'jwt-decode'
 
 function Register() {
 
@@ -14,7 +15,7 @@ function Register() {
 
   const token = localStorage.getItem('token')
 
-  if(token) {
+  if(jwtDecode(token).exp * 1000 > Date.now()) {
     return <Navigate to="/view-pet" />
     console.log('you are already logged in my dude')
   } else {
