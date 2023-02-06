@@ -1,16 +1,31 @@
 import { Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 
 import "../styles/Login.css";
 
+
+
 function Login() {
+
+  
   const token = localStorage.getItem("token");
 
-  const [registerState, setRegisterState] = useState({
+  const [loginState, setLoginState] = useState({
     email: "",
     password: "",
   });
+  const [validUsername, setValidUsername] = useState(false)
+  const [validPassword, setValidPassword] = useState(false)
+
+  useEffect(() => {
+    if (loginState.password.length <= 5) {
+      setValidPassword(false)
+    } else {
+      setValidPassword(true)
+    }
+    console.log(loginState)
+  }, [loginState])
 
   if (token) {
     if (jwtDecode(token).exp * 1000 > Date.now()) {
@@ -21,6 +36,8 @@ function Login() {
     }
   }
 
+  
+
   async function loginUser(event) {
     event.preventDefault();
     const response = await fetch("http://localhost:5000/api/login", {
@@ -29,8 +46,8 @@ function Login() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: registerState.email,
-        password: registerState.password,
+        email: loginState.email,
+        password: loginState.password,
       }),
     });
 
@@ -45,12 +62,18 @@ function Login() {
     }
     console.log(data);
   }
+  
 
   function handleChange(event) {
     const value = event.target.value;
-    setRegisterState({ ...registerState, [event.target.name]: value });
-    console.log(registerState);
+    console.log(value)
+    setLoginState({ ...loginState, [event.target.name]: value });
+    
+    console.log(loginState);
+    console.log(validPassword)
   }
+
+  
 
   return (
     <div className="login-container">
@@ -60,16 +83,18 @@ function Login() {
           type="email"
           name="email"
           placeholder="email"
-          value={registerState.email}
+          value={loginState.email}
           onChange={handleChange}
         ></input>
+        {validUsername && <p>Invalid username!</p>}
         <input
           type="password"
           name="password"
           placeholder="password"
-          value={registerState.password}
+          value={loginState.password}
           onChange={handleChange}
         ></input>
+        {!validPassword && <p>Invalid password! Must be at least 6 characters long!</p>}
         <input type="submit" value="login"></input>
       </form>
     </div>
