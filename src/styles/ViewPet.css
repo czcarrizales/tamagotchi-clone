@@ -71,3 +71,39 @@
 .view-pet-buttons-container {
     margin-bottom: 3em;
 }
+
+@media (min-width: 1000px) {
+
+    .view-pet-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .view-pet-inner-container {
+        display: flex;
+    }
+
+    .pet-details {
+        width: 50%;
+    }
+    .view-pet-container img {
+        width: 50%;
+    }
+
+    .pet-stat {
+        width: 10vw;
+        height: 10vw;
+    }
+
+    .view-pet-container button {
+        width: 50%;
+    }
+
+    .view-pet-buttons-container {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
