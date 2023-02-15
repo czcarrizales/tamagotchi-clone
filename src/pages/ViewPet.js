@@ -65,6 +65,7 @@ function ViewPet() {
     <div className="view-pet-container">
       {petData && (
         <div className="view-pet-inner-container">
+          <div className="pet-details">
           <h1>{petData.name}</h1>
           <img src={petData.imageSrc}></img>
           <div className="pet-stats-container">
@@ -76,6 +77,7 @@ function ViewPet() {
               <span>🍭</span>
               {petData.hunger}
             </div>
+          </div>
           </div>
           <br />
           <div className="view-pet-buttons-container">
