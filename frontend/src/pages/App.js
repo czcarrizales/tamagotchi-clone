@@ -42,9 +42,10 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1 className="app-welcome">
-        Welcome {decodedToken && decodedToken.name}!
-      </h1>
+      {token ? <h1 className="app-welcome">Welcome {decodedToken && decodedToken.name}!</h1> : <h1 className="app-welcome">Welcome!</h1> }
+      {/* <h1 className="app-welcome">
+        {token && Welcome {decodedToken && decodedToken.name}!}
+      </h1> */}
       <BrowserRouter>
       <Navbar />
         <Routes>
