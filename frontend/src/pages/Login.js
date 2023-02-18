@@ -12,11 +12,12 @@ function Login() {
   const token = localStorage.getItem("token");
 
   const [loginState, setLoginState] = useState({
-    email: "",
+    name: "",
     password: "",
   });
   const [validUsername, setValidUsername] = useState(false)
   const [validPassword, setValidPassword] = useState(false)
+  const [loggingIn, setLoggingIn] = useState(false)
 
   useEffect(() => {
     if (loginState.password.length <= 5 && loginState.password !== '') {
@@ -45,7 +46,7 @@ function Login() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: loginState.email,
+        name: loginState.name,
         password: loginState.password,
       }),
     });
@@ -54,8 +55,8 @@ function Login() {
 
     if (data.user) {
       localStorage.setItem("token", data.user);
-      alert("login success!");
       window.location.href = "/view-pet";
+      setLoggingIn(true)
     } else {
       alert("yo man, check yo email and password, ya hear?");
     }
@@ -79,10 +80,10 @@ function Login() {
       <h1>Login</h1>
       <form onSubmit={loginUser}>
         <input
-          type="email"
-          name="email"
-          placeholder="email"
-          value={loginState.email}
+          type="name"
+          name="name"
+          placeholder="username"
+          value={loginState.name}
           onChange={handleChange}
         ></input>
         {validUsername && <p>Invalid username!</p>}
