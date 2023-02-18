@@ -23,4 +23,5 @@
 .register-container form input[type=submit] {
     background-color: #FFE38C;
     height: 80px;
+    cursor: pointer;
 }
