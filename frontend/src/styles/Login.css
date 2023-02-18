@@ -25,3 +25,7 @@
     height: 80px;
     cursor: pointer;
 }
+
+.login-container span {
+    margin: 0 4em;
+}
