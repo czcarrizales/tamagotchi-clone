@@ -19,7 +19,7 @@ function Login() {
   const [validPassword, setValidPassword] = useState(false)
 
   useEffect(() => {
-    if (loginState.password.length <= 5) {
+    if (loginState.password.length <= 5 && loginState.password !== '') {
       setValidPassword(false)
     } else {
       setValidPassword(true)
@@ -30,7 +30,6 @@ function Login() {
   if (token) {
     if (jwtDecode(token).exp * 1000 > Date.now()) {
       return <Navigate to="/view-pet" />;
-      console.log("you are already logged in my dude");
     } else {
       console.log("they are not logged in");
     }
@@ -94,7 +93,7 @@ function Login() {
           value={loginState.password}
           onChange={handleChange}
         ></input>
-        {!validPassword && <p>Invalid password! Must be at least 6 characters long!</p>}
+        {!validPassword && <span>Invalid password! Must be at least 6 characters long!</span>}
         <input type="submit" value="login"></input>
       </form>
     </div>
