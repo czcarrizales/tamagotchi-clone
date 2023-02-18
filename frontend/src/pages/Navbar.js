@@ -6,6 +6,8 @@ import axios from "axios";
 function Navbar() {
   const token = localStorage.getItem("token");
 
+  console.log(token, 'token')
+
   const [userData, setUserData] = useState(null);
 
   let decodedToken;
@@ -44,27 +46,23 @@ function Navbar() {
   }
 
   function isLoggedIn() {
-    if (token) {
-      if (jwtDecode(token).exp * 1000 < Date.now()) {
-        return (
-          <div>
-            <li>
+    if (token == null) {
+      return (<div>
+        <li>
               <a href="/login">Login</a>
             </li>
             <li>
               <a href="/register">Register</a>
             </li>
-          </div>
-        );
-      } else {
-        return (
-          <div>
-            <li>
-              <a href="#" onClick={logout}>Logout</a>
-            </li>
-          </div>
-        );
-      }
+      </div>)
+    } else if (token) {
+      return (
+        <div>
+          <li>
+            <a href="#" onClick={logout}>Logout</a>
+          </li>
+        </div>
+      )
     }
   }
 
