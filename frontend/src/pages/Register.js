@@ -15,12 +15,12 @@ function Register() {
 
   const token = localStorage.getItem('token')
 
-  if(jwtDecode(token).exp * 1000 > Date.now()) {
-    return <Navigate to="/view-pet" />
-    console.log('you are already logged in my dude')
-  } else {
-    console.log('they are not logged in')
-  }
+  // if(jwtDecode(token).exp * 1000 > Date.now()) {
+  //   return <Navigate to="/view-pet" />
+  //   console.log('you are already logged in my dude')
+  // } else {
+  //   console.log('they are not logged in')
+  // }
 
   async function registerUser(event) {
     event.preventDefault()
