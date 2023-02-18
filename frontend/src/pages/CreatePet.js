@@ -64,44 +64,6 @@ function CreatePet() {
     },
   });
 
-  async function populateQuote() {
-    const req = await fetch("http://localhost:5000/api/quote", {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    });
-
-    const data = await req.json();
-    if (data.status === "ok") {
-      setQuote(data.quote);
-    } else {
-      alert(data.error);
-    }
-  }
-
-  async function updateQuote(event) {
-    event.preventDefault();
-    const req = await fetch("http://localhost:5000/api/quote", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-access-token": localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        quote: tempQuote,
-        name: "testy",
-      }),
-    });
-
-    const data = await req.json();
-    if (data.status === "ok") {
-      setQuote(tempQuote);
-      setTempQuote("");
-    } else {
-      alert(data.error);
-    }
-  }
-
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -110,7 +72,7 @@ function CreatePet() {
         localStorage.removeItem("token");
         navigate.replace("/login");
       } else {
-        populateQuote();
+        
       }
     }
   }, []);
