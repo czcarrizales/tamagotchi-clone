@@ -7,15 +7,50 @@ import "../styles/CreatePet.css";
 function CreatePet() {
   const navigate = useNavigate();
   const [quote, setQuote] = useState("");
+  const [userData, setUserData] = useState(null);
+  const [userHasPet, setUserHasPet] = useState(false)
   const [tempQuote, setTempQuote] = useState("");
   const [petName, setPetName] = useState("");
   const [petPersonality, setPetPersonality] = useState("calm");
   const [petImage, setPetImage] = useState("");
   const accessToken = localStorage.getItem("token");
   let decodedToken;
-  if (accessToken) {
-    decodedToken = jwtDecode(accessToken);
-  }
+
+  useEffect(() => {
+    async function fetchUserData() {
+      await authAxios.get("/api/user-data").then((res) => {
+        setUserData(res.data.user);
+        if (res.data.user.pet === null) {
+          setUserHasPet(false)
+        } else {
+          navigate('/view-pet')
+        }
+      });
+    }
+    fetchUserData();
+    console.log("fetched user data");
+    return () => {};
+  }, []);
+
+  useEffect(() => {
+    console.log(accessToken)
+    if (accessToken) {
+      decodedToken = jwtDecode(accessToken, 'token')
+      console.log(decodedToken)
+      if (decodedToken.exp * 1000 < Date.now()) {
+        console.log('token is expired')
+        localStorage.removeItem('token')
+        navigate('/login')
+      }
+    } else {
+      navigate('/login')
+    }
+    console.log('checking if token is expired or not')
+  }, [])
+
+  useEffect(() => {
+    console.log('checking if user already has a pet')
+  })
 
   axios.interceptors.request.use((config) => {
     config.headers.authorization = `Bearer ${accessToken}`;
@@ -28,8 +63,6 @@ function CreatePet() {
       Authorization: `Bearer ${accessToken}`,
     },
   });
-
-  
 
   async function populateQuote() {
     const req = await fetch("http://localhost:5000/api/quote", {
