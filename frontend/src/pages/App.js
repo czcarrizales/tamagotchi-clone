@@ -45,8 +45,8 @@ function App() {
       <h1 className="app-welcome">
         Welcome {decodedToken && decodedToken.name}!
       </h1>
-      <Navbar />
       <BrowserRouter>
+      <Navbar />
         <Routes>
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
