@@ -47,7 +47,7 @@ app.post('/api/login', async (req, res) => {
                 name: req.body.name,
                 pet: user.pet,
                 _id: user._id
-            }, 'secret123', {expiresIn: "100s"})
+            }, 'secret123', {expiresIn: 60 * 60})
             console.log('found a matching email and password')
             return res.json({status: 'ok, found a matching email and password', user: token})
             
@@ -142,7 +142,7 @@ app.get('/api/adoptable-pets', async (req, res) => {
 
 app.put('/raise-happiness', async (req, res) => {
     try {
-        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {happiness: 1}})
+        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {happiness: 1}}, {new: true})
         res.send(response)
         console.log(response)
     } catch (err) {
@@ -153,7 +153,7 @@ app.put('/raise-happiness', async (req, res) => {
 
 app.put('/raise-hunger', async (req, res) => {
     try {
-        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {hunger: 1}})
+        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {hunger: 1}}, {new: true})
         res.send(response)
         console.log(response)
     } catch (err) {
