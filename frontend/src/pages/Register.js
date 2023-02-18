@@ -14,6 +14,7 @@ function Register() {
   const [validPassword, setValidPassword] = useState(false)
   const [validUsername, setValidUsername] = useState(false)
   const [duplicateUsername, setDuplicateUsername] = useState(false)
+  const [duplicateUsernameText, setDuplicateUsernameText] = useState('')
 
   const token = localStorage.getItem('token')
 
@@ -50,18 +51,17 @@ function Register() {
           password: registerState.password
         })
       })
-
-      console.log(response)
   
       const data = await response.json()
-      console.log(data.status)
   
       if (data.status === 'ok') {
           navigate('/login')
       } else if (data.status === 'duplicate username'){
         setDuplicateUsername(true)
+        setDuplicateUsernameText(registerState.name)
+        console.log(response)
+        console.log(data)
       }
-      console.log(data)
     }
     
   }
@@ -85,7 +85,7 @@ function Register() {
       <form onSubmit={registerUser}>
         <input type="text" name="name" placeholder="username" value={registerState.name} onChange={handleChange}></input>
         {!validUsername && <span>Your username must be at least 6 characters.</span>}
-        {duplicateUsername && <span>Username already taken.</span>}
+        {duplicateUsername && <span>Username {duplicateUsernameText} already taken.</span>}
         <input type="password" name="password" placeholder="password" value={registerState.password} onChange={handleChange}></input>
         {!validPassword && <span>Your password must be at least 6 characters.</span>}
         <input type="submit" value="register"></input>
