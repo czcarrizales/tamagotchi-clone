@@ -73,22 +73,15 @@ function ViewPet() {
     authAxios
       .put("http://localhost:5000/raise-hunger", { _id: petData._id })
       .then((req, res) => {
-        console.log(res);
         setHunger(req.data.hunger)
-        console.log("hunger raised!");
       });
-    console.log("hunger raised!");
   }
 
   function raiseHappiness() {
     authAxios
       .put("http://localhost:5000/raise-happiness", { _id: petData._id })
       .then((req, res) => {
-        console.log(req)
-        console.log(req.data.happiness)
         setHappiness(req.data.happiness)
-        console.log('raised happiness')
-        console.log(happiness)
       })
   }
 
