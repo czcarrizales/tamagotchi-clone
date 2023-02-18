@@ -34,7 +34,7 @@
 }
 
 .view-pet-container img {
-    width: 80%;
+    width: 60%;
     margin: auto;
     margin-top: 1em;
     border-radius: 50%;
@@ -72,19 +72,28 @@
     margin-bottom: 3em;
 }
 
+@media (min-width: 400px) {
+
+}
+
 @media (min-width: 1000px) {
 
     .view-pet-container {
         display: flex;
         flex-direction: row;
+        border: 1px solid blue;
     }
 
     .view-pet-inner-container {
         display: flex;
+        margin-left: 8em;
+        margin-right: 8em;
+        border: 1px solid green;
     }
 
     .pet-details {
         width: 50%;
+        border: 1px solid black;
     }
     .view-pet-container img {
         width: 50%;
@@ -105,5 +114,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        border: 1px solid pink;
     }
 }
