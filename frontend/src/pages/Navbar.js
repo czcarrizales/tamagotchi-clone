@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import "../styles/Navbar.css";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const token = localStorage.getItem("token");
+  const navigate = useNavigate()
 
   console.log(token, 'token')
 
@@ -42,12 +44,15 @@ function Navbar() {
   function logout() {
     localStorage.clear()
     axios.get('http://localhost:5000/logout')
-      .then(console.log('logged out from front end'))
+      .then(
+        console.log('logged out from front end')
+        )
+        .then(navigate('/login'))
   }
 
   function isLoggedIn() {
     if (token == null) {
-      return (<div>
+      return (<div className="login-register">
         <li>
               <a href="/login">Login</a>
             </li>
