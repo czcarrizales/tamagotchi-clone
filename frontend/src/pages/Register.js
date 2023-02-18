@@ -9,11 +9,11 @@ function Register() {
 
   const [registerState, setRegisterState] = useState({
     name: '',
-    email: '',
     password: ''
   })
   const [validPassword, setValidPassword] = useState(false)
   const [validUsername, setValidUsername] = useState(false)
+  const [duplicateUsername, setDuplicateUsername] = useState(false)
 
   const token = localStorage.getItem('token')
 
@@ -47,15 +47,19 @@ function Register() {
         },
         body: JSON.stringify({
           name: registerState.name,
-          email: registerState.email,
           password: registerState.password
         })
       })
+
+      console.log(response)
   
       const data = await response.json()
+      console.log(data.status)
   
       if (data.status === 'ok') {
           navigate('/login')
+      } else if (data.status === 'duplicate username'){
+        setDuplicateUsername(true)
       }
       console.log(data)
     }
@@ -79,9 +83,9 @@ function Register() {
     <div className='register-container'>
       <h1>Register</h1>
       <form onSubmit={registerUser}>
-        <input type="text" name="name" placeholder="name" value={registerState.name} onChange={handleChange}></input>
+        <input type="text" name="name" placeholder="username" value={registerState.name} onChange={handleChange}></input>
         {!validUsername && <span>Your username must be at least 6 characters.</span>}
-        <input type="email" name="email" placeholder="email" value={registerState.email} onChange={handleChange}></input>
+        {duplicateUsername && <span>Username already taken.</span>}
         <input type="password" name="password" placeholder="password" value={registerState.password} onChange={handleChange}></input>
         {!validPassword && <span>Your password must be at least 6 characters.</span>}
         <input type="submit" value="register"></input>
