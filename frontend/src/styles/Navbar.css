@@ -18,6 +18,12 @@
     scale: 1.2;
 }
 
+.login-register {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
 @media (min-width: 1000px) {
     .navbar-container {
         justify-content: center;
