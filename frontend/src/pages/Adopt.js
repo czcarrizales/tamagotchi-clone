@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import jwtDecode from "jwt-decode";
 import '../styles/Adopt.css'
 import { useNavigate } from "react-router-dom";
 
 function Adopt() {
 
   const token = localStorage.getItem('token')
+  let decodedToken;
   const navigate = useNavigate()
   const [adoptablePets, setAdoptablePets] = useState([])
   
@@ -15,6 +17,18 @@ function Adopt() {
         Authorization: `Bearer ${token}`
     }
 })
+
+useEffect(() => {
+  if (token) {
+    decodedToken = jwtDecode(token, 'token')
+    if (decodedToken.exp * 1000 < Date.now()) {
+      localStorage.removeItem('token')
+      navigate('/login')
+    }
+  } else {
+    navigate('/login')
+  }
+}, [])
 
 useEffect(() => {
     setAdoptablePets([])
