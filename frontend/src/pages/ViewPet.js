@@ -6,9 +6,33 @@ import { useNavigate } from "react-router-dom";
 
 function ViewPet() {
   const token = localStorage.getItem("token");
-  const decodedToken = jwtDecode(token);
+  let decodedToken;
   const [petData, setPetData] = useState();
+  const [happiness, setHappiness] = useState()
+  const [hunger, setHunger] = useState()
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token) {
+      decodedToken = jwtDecode(token, 'token')
+      if (decodedToken.exp * 1000 < Date.now()) {
+        localStorage.removeItem('token')
+        navigate('/login')
+      }
+    } else {
+      navigate('/login')
+    }
+  }, [])
+
+  useEffect(() => {
+    console.log('happiness changed')
+  }, [happiness])
+
+  useEffect(() => {
+    console.log('hunger changed')
+  }, [hunger])
+
+  
 
   const authAxios = axios.create({
     baseUrl: "http://localhost:5000",
@@ -20,6 +44,8 @@ function ViewPet() {
   useEffect(() => {
     authAxios.get(`http://localhost:5000/api/pet`).then((req, res) => {
       setPetData(req.data.pet);
+      setHappiness(req.data.pet.happiness)
+      setHunger(req.data.pet.hunger)
     });
   }, []);
 
@@ -42,6 +68,7 @@ function ViewPet() {
       .put("http://localhost:5000/raise-hunger", { _id: petData._id })
       .then((req, res) => {
         console.log(res);
+        setHunger(req.data.hunger)
         console.log("hunger raised!");
       });
     console.log("hunger raised!");
@@ -52,8 +79,10 @@ function ViewPet() {
       .put("http://localhost:5000/raise-happiness", { _id: petData._id })
       .then((req, res) => {
         console.log(req)
-        console.log(res)
+        console.log(req.data.happiness)
+        setHappiness(req.data.happiness)
         console.log('raised happiness')
+        console.log(happiness)
       })
   }
 
@@ -71,11 +100,11 @@ function ViewPet() {
           <div className="pet-stats-container">
             <div className="pet-stat">
               <span className="pet-stat-heart">❤</span>
-              {petData.happiness}
+              {happiness}
             </div>
             <div className="pet-stat">
               <span>🍭</span>
-              {petData.hunger}
+              {hunger}
             </div>
           </div>
           </div>
