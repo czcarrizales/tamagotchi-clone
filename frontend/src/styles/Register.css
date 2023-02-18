@@ -25,3 +25,7 @@
     height: 80px;
     cursor: pointer;
 }
+
+.register-container span {
+    color: rgb(184, 0, 0);
+}
