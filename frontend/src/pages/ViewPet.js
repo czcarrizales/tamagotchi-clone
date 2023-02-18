@@ -43,9 +43,15 @@ function ViewPet() {
 
   useEffect(() => {
     authAxios.get(`http://localhost:5000/api/pet`).then((req, res) => {
-      setPetData(req.data.pet);
-      setHappiness(req.data.pet.happiness)
-      setHunger(req.data.pet.hunger)
+      if (req.data.pet === null) {
+        navigate('/create-pet')
+      } else {
+        setPetData(req.data.pet);
+        setHappiness(req.data.pet.happiness)
+        setHunger(req.data.pet.hunger)
+      }
+      console.log(req)
+      
     });
   }, []);
 
@@ -116,7 +122,7 @@ function ViewPet() {
           </div>
         </div>
       )}
-      {petData == undefined && <div>You have no pets! Go adopt one!</div>}
+      {petData == undefined && <p>Loading...</p>}
     </div>
   );
 }
