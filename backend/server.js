@@ -14,33 +14,37 @@ mongoose.connect('mongodb+srv://user:user@cluster0.4votkmf.mongodb.net/tamagotch
 
 app.post('/api/register', async (req, res) => {
     console.log(req.body)
+    const duplicateUsernameCheck = await User.findOne({name: req.body.name})
+    console.log(duplicateUsernameCheck)
+    if (duplicateUsernameCheck !== null) {
+        return res.json({status: 'duplicate username'})
+    }
     try {
         const newPassword = await bcrypt.hash(req.body.password, 10)
         await User.create({
             name: req.body.name,
-            email: req.body.email,
             password: newPassword,
             pet: null
         })
         res.json({status: 'ok'})
     } catch (err) {
         console.log('error', err)
+        res.json({status: 'error'})
     }
 })
 
 app.post('/api/login', async (req, res) => {
         const user = await User.findOne({
-            email: req.body.email,
+            name: req.body.name,
         })
 
-        console.log(user)
+        
 
         const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
 
         if (isPasswordValid) {
             const token = jwt.sign({
-                email: req.body.email,
-                name: user.name,
+                name: req.body.name,
                 pet: user.pet,
                 _id: user._id
             }, 'secret123', {expiresIn: "100s"})
@@ -62,37 +66,10 @@ app.get('/api/user-data', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1]
     try {
     const decoded = jwt.verify(token, 'secret123')
-    const email = decoded.email
-    const user = await User.findOne({email: email})
+    const name = decoded.name
+    const user = await User.findOne({name: name})
 
     return res.json({status: 'ok', user: user})
-    } catch(error) {
-        console.log(error)
-        res.json({status: 'error', error: 'invalid token'})
-    }
-})
-
-app.get('/api/quote', async (req, res) => {
-    const token = req.headers['x-access-token']
-    try {
-    const decoded = jwt.verify(token, 'secret123')
-    const email = decoded.email
-    const user = await User.findOne({email: email})
-
-    return res.json({status: 'ok', quote: user.quote})
-    } catch(error) {
-        console.log(error)
-        res.json({status: 'error', error: 'invalid token'})
-    }
-})
-
-app.post('/api/quote', async (req, res) => {
-    const token = req.headers['x-access-token']
-    try {
-    const decoded = jwt.verify(token, 'secret123')
-    const email = decoded.email
-    await User.updateOne({email: email}, {$set: {quote: req.body.quote}})
-    return res.json({status: 'ok'})
     } catch(error) {
         console.log(error)
         res.json({status: 'error', error: 'invalid token'})
@@ -103,8 +80,8 @@ app.get('/api/pet', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1]
     try {
     const decoded = jwt.verify(token, 'secret123')
-    const email = decoded.email
-    const user = await User.findOne({email: email})
+    const name = decoded.name
+    const user = await User.findOne({name: name})
     const pet = await Pet.findById(user.pet)
 
     return res.json({status: 'ok', pet: pet})
@@ -129,7 +106,7 @@ app.post('/api/pet', async (req, res) => {
         })
         console.log(decoded)
         console.log(pet)
-        await User.updateOne({email: decoded.email}, {$set: {pet: pet._id}})
+        await User.updateOne({name: decoded.name}, {$set: {pet: pet._id}})
         res.json({status: 'ok'})
     } catch (err) {
         console.log('error', err)
@@ -140,10 +117,10 @@ app.put('/api/pet', async(req, res) => {
     const token = req.headers.authorization.split(' ')[1]
     try {
     const decoded = jwt.verify(token, 'secret123')
-    const email = decoded.email
-    const user = await User.findOne({email: email})
+    const name = decoded.name
+    const user = await User.findOne({name: name})
     const pet = await Pet.findByIdAndUpdate(user.pet, {adoptable: true})
-    User.findOneAndUpdate({email: user.email}, {pet: null})
+    User.findOneAndUpdate({name: user.name}, {pet: null})
         .then(console.log('removed pet from user'))
     return res.json({status: 'ok', pet: pet})
     } catch(error) {
@@ -188,10 +165,10 @@ app.put('/adopt-pet', async (req, res) => {
     const token = req.headers.authorization.split(' ')[1]
     try {
     const decoded = jwt.verify(token, 'secret123')
-    const email = decoded.email
-    const user = await User.findOne({email: email})
+    const name = decoded.name
+    const user = await User.findOne({name: name})
     if (user.pet == null) {
-        await User.findOneAndUpdate({email: email}, {pet: req.body._id})
+        await User.findOneAndUpdate({name: name}, {pet: req.body._id})
         const pet = await Pet.findByIdAndUpdate(req.body._id, {adoptable: false})
         console.log('user adopted this pet!')
     } else {
