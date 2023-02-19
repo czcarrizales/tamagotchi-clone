@@ -135,6 +135,7 @@ app.get('/api/adoptable-pets', async (req, res) => {
             res.send(error)
         } else {
             res.json(data)
+            console.log(data)
         }
     })
     console.log('found adoptable pets')
@@ -170,7 +171,7 @@ app.put('/adopt-pet', async (req, res) => {
     if (user.pet == null) {
         await User.findOneAndUpdate({name: name}, {pet: req.body._id})
         const pet = await Pet.findByIdAndUpdate(req.body._id, {adoptable: false})
-        console.log('user adopted this pet!')
+        return res.json({status: 'ok, pet adopted', pet: pet})
     } else {
         console.log('yo, this guy already has a pet!')
     }
