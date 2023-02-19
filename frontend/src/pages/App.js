@@ -14,49 +14,65 @@ import axios from "axios";
 function App() {
   const token = localStorage.getItem("token");
   let decodedToken;
+  const [userData, setUserData] = useState()
+  const [stateChange, setStateChange] = useState('')
   if (token) {
     decodedToken = jwtDecode(token);
   }
 
-  // axios.interceptors.request.use((config) => {
-  //   config.headers.authorization = `Bearer ${token}`;
-  //   return config;
-  // });
+  const authAxios = axios.create({
+    baseUrl: "http://localhost:5000",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
-  // const authAxios = axios.create({
-  //   baseURL: "http://localhost:5000",
-  //   headers: {
-  //     Authorization: `Bearer ${token}`,
-  //   },
-  // });
+  const getUserData = () => {
+    authAxios.get(`http://localhost:5000/api/user-data`).then((req, res) => {
+      console.log(req.data.user, 'this is getting the user data from the server')
+      console.log(userData, 'getting the user data from a function')
+      setUserData(req.data.user)
+    });
+    
+  }
 
   
 
-  // useEffect(() => {
-  //   authAxios.get("/api/user-data").then((res) => {
-  //     console.log(res.data.user, "user data fetched");
-  //     console.log(res.data.user.pet === null)
-  //   });
-  //   console.log('user data fetched')
-  // }, [])
+  useEffect(() => {
+    getUserData()
+  }, []);
+
+  const handleDataChange = (newState) => {
+    setStateChange(newState)
+  }
+
+  const handleUserDataChange = (newUserData) => {
+    setUserData(newUserData)
+  }
+
+  useEffect(() => {
+    console.log(userData, 'checking user data')
+  }, [userData])
 
   return (
     <div className="app-container">
       {token ? <h1 className="app-welcome">Welcome {decodedToken && decodedToken.name}!</h1> : <h1 className="app-welcome">Welcome!</h1> }
-      {/* <h1 className="app-welcome">
-        {token && Welcome {decodedToken && decodedToken.name}!}
-      </h1> */}
-      <BrowserRouter>
-      <Navbar />
+      {
+        (userData || userData === undefined) && (
+<BrowserRouter>
+      <Navbar userData={userData} />
         <Routes>
           <Route path="/login" exact element={<Login />} />
           <Route path="/register" exact element={<Register />} />
-          <Route path="/create-pet" exact element={<CreatePet />} />
-          <Route path="/view-pet" exact element={<ViewPet />} />
+          <Route path="/create-pet" exact element={<CreatePet userData={userData} handleDataChange={handleDataChange} getUserData={getUserData} handleUserDataChange={handleUserDataChange} />} />
+          <Route path="/view-pet" exact element={<ViewPet userData={userData}  />} />
           <Route path="/adopt" exact element={<Adopt />} />
           {/* <Route path="/play" exact element={<Play />} /> */}
         </Routes>
       </BrowserRouter>
+        )
+      }
+      
     </div>
   );
 }
