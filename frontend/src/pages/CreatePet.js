@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/CreatePet.css";
 
-function CreatePet({userData, handleDataChange, getUserData, handleUserDataChange}) {
+function CreatePet({userData, handleDataChange, getUserData}) {
   const navigate = useNavigate();
   const [quote, setQuote] = useState("");
   const [userHasPet, setUserHasPet] = useState(false)
