@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 import jwtDecode from "jwt-decode";
 import "../styles/Navbar.css";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({userData}) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
-
-  console.log(token, 'token')
-
-  const [userData, setUserData] = useState(null);
+  const [userHasPet, setUserHasPet] = useState(false)
 
   let decodedToken;
   if (token) {
@@ -21,25 +18,23 @@ function Navbar() {
     });
   }
 
-  
-
-  const authAxios = axios.create({
-    baseURL: "http://localhost:5000",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-
   useEffect(() => {
     async function fetchUserData() {
-      await authAxios.get("/api/user-data").then((res) => {
-        setUserData(res.data.user);
-      });
+      console.log('navbar checking if user has pet')
+        if (userData && userData.pet === null) {
+          setUserHasPet(false)
+        } else {
+          setUserHasPet(true)
+        }
     }
     fetchUserData();
-    console.log("fetched user data");
     return () => {};
-  }, []);
+  }, [userData]);
+
+  useEffect(() => {
+    console.log('navbar component rerender')
+    console.log(userData)
+  }, [userData])
 
   function logout() {
     localStorage.clear()
@@ -73,28 +68,37 @@ function Navbar() {
 
   function hasPet() {
     if (token && userData) {
-      if (userData.pet === null) {
+      if (!userHasPet) {
         return (
           <div>
             <li>
-              <a href="/create-pet">Create</a>
+              <Link to="/create-pet">Create</Link>
             </li>
+            <li>
+          <Link to="/adopt">Adopt</Link>
+        </li>
           </div>
         );
+      } else {
+        return (
+          <div>
+            <li>
+              <a href="/view-pet">Pet</a>
+            </li>
+          </div>
+        )
       }
     }
+  }
+
+  const getDataFromParent = () => {
+    
   }
 
   return (
     <div className="navbar-container">
       <ul className="navbar-ul-container">
         {hasPet()}
-        <li>
-          <a href="/view-pet">Pet</a>
-        </li>
-        <li>
-          <a href="/adopt">Adopt</a>
-        </li>
         {isLoggedIn()}
       </ul>
     </div>
