@@ -4,10 +4,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/CreatePet.css";
 
-function CreatePet() {
+function CreatePet({userData, handleDataChange, getUserData, handleUserDataChange}) {
   const navigate = useNavigate();
   const [quote, setQuote] = useState("");
-  const [userData, setUserData] = useState(null);
   const [userHasPet, setUserHasPet] = useState(false)
   const [tempQuote, setTempQuote] = useState("");
   const [petName, setPetName] = useState("");
@@ -16,24 +15,18 @@ function CreatePet() {
   const accessToken = localStorage.getItem("token");
   let decodedToken;
 
-  useEffect(() => {
-    async function fetchUserData() {
-      await authAxios.get("/api/user-data").then((res) => {
-        setUserData(res.data.user);
-        if (res.data.user.pet === null) {
-          setUserHasPet(false)
-        } else {
-          navigate('/view-pet')
-        }
-      });
-    }
-    fetchUserData();
-    console.log("fetched user data");
-    return () => {};
-  }, []);
+  console.log(userData)
 
   useEffect(() => {
-    console.log(accessToken)
+    if (userData.pet === null) {
+      setUserHasPet(false)
+    } else {
+      navigate('/view-pet')
+    }
+    return () => {}
+  }, [])
+
+  useEffect(() => {
     if (accessToken) {
       decodedToken = jwtDecode(accessToken, 'token')
       console.log(decodedToken)
@@ -45,7 +38,6 @@ function CreatePet() {
     } else {
       navigate('/login')
     }
-    console.log('checking if token is expired or not')
   }, [])
 
   useEffect(() => {
@@ -115,9 +107,12 @@ function CreatePet() {
           imageSrc: petImage,
         })
         .then((res) => {
+          handleDataChange('data changed from create-pet')
+          getUserData()
+          navigateToPet()
           console.log(res);
         });
-      navigateToPet()
+      
     } 
   }
 
@@ -202,7 +197,7 @@ function CreatePet() {
           </label>
         </div>
       </div>
-      <button onClick={adopt}>Adopt!</button>
+      <button onClick={() => {adopt()}}>Adopt!</button>
     </div>
   );
 }
