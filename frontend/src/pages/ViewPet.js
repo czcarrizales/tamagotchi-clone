@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import "../styles/ViewPet.css";
 import { useNavigate } from "react-router-dom";
 
-function ViewPet({userData}) {
+function ViewPet({userData, getUserData, handleDataChange}) {
   const token = localStorage.getItem("token");
   let decodedToken;
   const [petData, setPetData] = useState();
@@ -52,9 +52,12 @@ function ViewPet({userData}) {
     if (confirmation) {
       authAxios.put("http://localhost:5000/api/pet").then((req, res) => {
         console.log(req);
-      });
-      console.log("put up your pet for adoption!");
+        console.log("put up your pet for adoption!");
+      handleDataChange('data changed from view-pet')
+      getUserData()
       navigateToAdoptPage()
+      });
+      
     }
 
     
