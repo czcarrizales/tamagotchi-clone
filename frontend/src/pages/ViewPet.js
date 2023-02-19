@@ -4,13 +4,14 @@ import jwtDecode from "jwt-decode";
 import "../styles/ViewPet.css";
 import { useNavigate } from "react-router-dom";
 
-function ViewPet() {
+function ViewPet({userData}) {
   const token = localStorage.getItem("token");
   let decodedToken;
   const [petData, setPetData] = useState();
   const [happiness, setHappiness] = useState()
   const [hunger, setHunger] = useState()
   const navigate = useNavigate();
+
 
   useEffect(() => {
     if (token) {
@@ -23,16 +24,6 @@ function ViewPet() {
       navigate('/login')
     }
   }, [])
-
-  useEffect(() => {
-    console.log('happiness changed')
-  }, [happiness])
-
-  useEffect(() => {
-    console.log('hunger changed')
-  }, [hunger])
-
-  
 
   const authAxios = axios.create({
     baseUrl: "http://localhost:5000",
