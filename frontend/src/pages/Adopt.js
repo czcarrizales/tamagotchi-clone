@@ -4,7 +4,7 @@ import jwtDecode from "jwt-decode";
 import '../styles/Adopt.css'
 import { useNavigate } from "react-router-dom";
 
-function Adopt() {
+function Adopt({getUserData, handleDataChange}) {
 
   const token = localStorage.getItem('token')
   let decodedToken;
@@ -34,6 +34,7 @@ useEffect(() => {
     setAdoptablePets([])
     authAxios.get(`http://localhost:5000/api/adoptable-pets`)
     .then((req, res) => {
+      console.log(req)
         req.data.map(pet => {
           setAdoptablePets(oldPets => [...oldPets, pet])
         })
@@ -41,18 +42,20 @@ useEffect(() => {
     })
 }, [])
 
-function adoptPet(pet) {
+async function adoptPet(pet) {
   const confirmation = window.confirm(`Are you sure you want to adopt ${pet.name}?`)
 
   if (confirmation) {
     authAxios.put(`http://localhost:5000/adopt-pet`, {_id: pet._id})
     .then((req, res) => {
-        console.log(req, res)
+      handleDataChange('data changed from adopt-pet')
+      getUserData()
+      navigateToPet()
     })
     .catch((err) => {
       console.log(err)
     })
-    navigateToPet()
+    
   }
 }
 
