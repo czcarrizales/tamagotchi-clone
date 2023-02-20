@@ -17,6 +17,7 @@ function Login() {
   });
   const [validUsername, setValidUsername] = useState(false)
   const [validPassword, setValidPassword] = useState(false)
+  const [loginFail, setLoginFail] = useState(false)
   const [loggingIn, setLoggingIn] = useState(false)
 
   useEffect(() => {
@@ -40,6 +41,8 @@ function Login() {
 
   async function loginUser(event) {
     event.preventDefault();
+    setLoggingIn(true)
+    setLoginFail(false)
     const response = await fetch("https://tamagotchi-clone-api.onrender.com/api/login", {
       method: "POST",
       headers: {
@@ -56,9 +59,9 @@ function Login() {
     if (data.user) {
       localStorage.setItem("token", data.user);
       window.location.href = "/view-pet";
-      setLoggingIn(true)
     } else {
-      alert("yo man, check yo email and password, ya hear?");
+      setLoginFail(true)
+      setLoggingIn(false)
     }
     console.log(data);
   }
@@ -95,7 +98,8 @@ function Login() {
           onChange={handleChange}
         ></input>
         {!validPassword && <span>Invalid password! Must be at least 6 characters long!</span>}
-        <input type="submit" value="login"></input>
+        {loginFail && <span>Login failed. Check your username and/or password.</span>}
+        {loggingIn ? <div>Logging in...</div> : <input type="submit" value="login"></input>}
       </form>
     </div>
   );
