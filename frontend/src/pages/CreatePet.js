@@ -50,7 +50,7 @@ function CreatePet({userData, handleDataChange, getUserData}) {
   });
 
   const authAxios = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://tamagotchi-clone-api.onrender.com/",
     headers: {
       Authorization: `Bearer ${accessToken}`,
     },

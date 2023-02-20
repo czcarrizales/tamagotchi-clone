@@ -8,14 +8,14 @@ function Play() {
   const [petData, setPetData] = useState();
 
   const authAxios = axios.create({
-    baseUrl: "http://localhost:5000",
+    baseUrl: "https://tamagotchi-clone-api.onrender.com/",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
   useEffect(() => {
-    authAxios.get(`http://localhost:5000/api/pet`).then((req, res) => {
+    authAxios.get(`https://tamagotchi-clone-api.onrender.com/api/pet`).then((req, res) => {
       console.log("got pet!");
       console.log(req.data.pet, "request");
       setPetData(req.data.pet);
@@ -26,7 +26,7 @@ function Play() {
 
   async function raiseHappiness() {
     await authAxios
-      .put("http://localhost:5000/raise-happiness", { _id: petData._id })
+      .put("https://tamagotchi-clone-api.onrender.com/raise-happiness", { _id: petData._id })
       .then((req, res) => {
         try {
             console.log('raised!')

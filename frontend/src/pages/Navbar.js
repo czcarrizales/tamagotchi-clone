@@ -38,7 +38,7 @@ function Navbar({userData}) {
 
   function logout() {
     localStorage.clear()
-    axios.get('http://localhost:5000/logout')
+    axios.get('https://tamagotchi-clone-api.onrender.com/logout')
       .then(
         console.log('logged out from front end')
         )

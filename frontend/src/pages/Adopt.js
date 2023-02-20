@@ -22,7 +22,7 @@ function Adopt({ userData, getUserData, handleDataChange }) {
   }, []);
 
   const authAxios = axios.create({
-    baseUrl: "http://localhost:5000",
+    baseUrl: "https://tamagotchi-clone-api.onrender.com/",
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -45,7 +45,7 @@ function Adopt({ userData, getUserData, handleDataChange }) {
   useEffect(() => {
     setAdoptablePets([]);
     authAxios
-      .get(`http://localhost:5000/api/adoptable-pets`)
+      .get(`https://tamagotchi-clone-api.onrender.com/api/adoptable-pets`)
       .then((req, res) => {
         console.log(req);
         req.data.map((pet) => {
@@ -61,7 +61,7 @@ function Adopt({ userData, getUserData, handleDataChange }) {
 
     if (confirmation) {
       authAxios
-        .put(`http://localhost:5000/adopt-pet`, { _id: pet._id })
+        .put(`https://tamagotchi-clone-api.onrender.com/adopt-pet`, { _id: pet._id })
         .then((req, res) => {
           handleDataChange("data changed from adopt-pet");
           getUserData();

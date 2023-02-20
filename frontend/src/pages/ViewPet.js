@@ -27,14 +27,14 @@ function ViewPet({userData, getUserData, handleDataChange}) {
   }, [])
 
   const authAxios = axios.create({
-    baseUrl: "http://localhost:5000",
+    baseUrl: "https://tamagotchi-clone-api.onrender.com/",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
   useEffect(() => {
-    authAxios.get(`http://localhost:5000/api/pet`).then((req, res) => {
+    authAxios.get(`https://tamagotchi-clone-api.onrender.com/api/pet`).then((req, res) => {
       if (req.data.pet === null) {
         navigate('/create-pet')
       } else {
@@ -52,7 +52,7 @@ function ViewPet({userData, getUserData, handleDataChange}) {
     const confirmation = window.confirm(`Are you sure you want to put ${petData.name} up for adoption?`)
 
     if (confirmation) {
-      authAxios.put("http://localhost:5000/api/pet").then((req, res) => {
+      authAxios.put("https://tamagotchi-clone-api.onrender.com/api/pet").then((req, res) => {
         console.log(req);
         console.log("put up your pet for adoption!");
       handleDataChange('data changed from view-pet')
@@ -67,7 +67,7 @@ function ViewPet({userData, getUserData, handleDataChange}) {
 
   function raiseHunger() {
     authAxios
-      .put("http://localhost:5000/raise-hunger", { _id: petData._id })
+      .put("https://tamagotchi-clone-api.onrender.com/raise-hunger", { _id: petData._id })
       .then((req, res) => {
         setHunger(req.data.hunger)
       });
@@ -75,7 +75,7 @@ function ViewPet({userData, getUserData, handleDataChange}) {
 
   function raiseHappiness() {
     authAxios
-      .put("http://localhost:5000/raise-happiness", { _id: petData._id })
+      .put("https://tamagotchi-clone-api.onrender.com/raise-happiness", { _id: petData._id })
       .then((req, res) => {
         setHappiness(req.data.happiness)
       })

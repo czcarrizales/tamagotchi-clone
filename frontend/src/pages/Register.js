@@ -42,7 +42,7 @@ function Register() {
   async function registerUser(event) {
     event.preventDefault()
     if (isValid()) {
-      const response = await fetch('http://localhost:5000/api/register', {
+      const response = await fetch('https://tamagotchi-clone-api.onrender.com/api/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

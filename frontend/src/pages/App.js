@@ -21,14 +21,14 @@ function App() {
   }
 
   const authAxios = axios.create({
-    baseUrl: "http://localhost:5000",
+    baseUrl: "https://tamagotchi-clone-api.onrender.com/",
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
   const getUserData = () => {
-    authAxios.get(`http://localhost:5000/api/user-data`).then((req, res) => {
+    authAxios.get(`https://tamagotchi-clone-api.onrender.com/api/user-data`).then((req, res) => {
       console.log(req.data.user, 'this is getting the user data from the server')
       console.log(userData, 'getting the user data from a function')
       setUserData(req.data.user)
