@@ -19,6 +19,7 @@ function Login() {
   const [validPassword, setValidPassword] = useState(false)
   const [loginFail, setLoginFail] = useState(false)
   const [loggingIn, setLoggingIn] = useState(false)
+  const [userFound, setUserFound] = useState('')
 
   useEffect(() => {
     if (loginState.password.length <= 5 && loginState.password !== '') {
@@ -43,7 +44,8 @@ function Login() {
     event.preventDefault();
     setLoggingIn(true)
     setLoginFail(false)
-    const response = await fetch("https://tamagotchi-clone-api.onrender.com/api/login", {
+    setUserFound(false)
+    const response = await fetch("http://localhost:5000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -55,6 +57,7 @@ function Login() {
     });
 
     const data = await response.json();
+    console.log(data, 'data')
 
     if (data.user) {
       localStorage.setItem("token", data.user);
@@ -63,7 +66,10 @@ function Login() {
       setLoginFail(true)
       setLoggingIn(false)
     }
-    console.log(data);
+    if (data.status === 'username not found') {
+      setUserFound(loginState.name)
+      console.log('username nottt found')
+    }
   }
   
 
@@ -90,6 +96,7 @@ function Login() {
           onChange={handleChange}
         ></input>
         {validUsername && <p>Invalid username!</p>}
+        {userFound && <span>Username {userFound} not found.</span>}
         <input
           type="password"
           name="password"
