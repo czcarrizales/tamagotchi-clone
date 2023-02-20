@@ -141,7 +141,7 @@ app.get('/api/adoptable-pets', async (req, res) => {
 
 app.put('/raise-happiness', async (req, res) => {
     try {
-        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {happiness: 1}}, {upsert: true, runValidators: true, new: true})
+        const response = await Pet.findOneAndUpdate({_id: req.body._id, happiness: {$lte: 99}}, {$inc: {happiness: 1}}, {runValidators: true, new: true, upsert: true})
         res.send(response)
         console.log(response)
     } catch (err) {
@@ -152,7 +152,7 @@ app.put('/raise-happiness', async (req, res) => {
 
 app.put('/raise-hunger', async (req, res) => {
     try {
-        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {hunger: 1}}, {new: true})
+        const response = await Pet.findOneAndUpdate({_id: req.body._id, hunger: {$lte: 99}}, {$inc: {hunger: 1}}, {new: true, runValidators: true, upsert: true})
         res.send(response)
         console.log(response)
     } catch (err) {
