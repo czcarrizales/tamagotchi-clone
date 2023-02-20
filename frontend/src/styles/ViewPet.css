@@ -101,6 +101,13 @@
         height: 10vw;
     }
 
+    .pet-status {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .view-pet-container button {
         width: 50%;
     }
