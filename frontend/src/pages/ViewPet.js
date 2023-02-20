@@ -10,6 +10,7 @@ function ViewPet({userData, getUserData, handleDataChange}) {
   const [petData, setPetData] = useState();
   const [happiness, setHappiness] = useState()
   const [hunger, setHunger] = useState()
+  const [personality, setPersonality] = useState()
   const navigate = useNavigate();
 
 
@@ -40,6 +41,7 @@ function ViewPet({userData, getUserData, handleDataChange}) {
         setPetData(req.data.pet);
         setHappiness(req.data.pet.happiness)
         setHunger(req.data.pet.hunger)
+        setPersonality(req.data.pet.personality)
       }
       console.log(req)
       
@@ -102,6 +104,18 @@ function ViewPet({userData, getUserData, handleDataChange}) {
           </div>
           </div>
           <br />
+          <span>{petData.name} is feeling {personality}.</span>
+          <br></br>
+          {happiness <= 100 && happiness >= 80 && <span>{petData.name} is happy!</span>}
+          {happiness < 80 && happiness >= 50 && <span>{petData.name} is okay.</span> }
+          {happiness >= 25 && happiness < 50 && <span>{petData.name} is lonely!</span>}
+          {happiness >= 0 && happiness < 25 && <span>{petData.name} is neglected!!!</span>}
+          <br></br>
+          {hunger === 100 && <span>{petData.name} is full!</span>}
+          {hunger > 75 && hunger < 100 && <span>{petData.name} could eat, but they are okay! </span>}
+          {hunger <= 75 && hunger >= 50 && <span>{petData.name} is a bit hungry.</span> }
+          {hunger >= 25 && hunger < 50 && <span>{petData.name} is very hungry!</span>}
+          {hunger >= 0 && hunger < 25 && <span>{petData.name} is starving!!!</span>}
           <div className="view-pet-buttons-container">
             <button onClick={raiseHappiness}>play!</button>
             <button onClick={raiseHunger}>feed</button>
