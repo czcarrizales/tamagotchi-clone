@@ -104,6 +104,7 @@ function ViewPet({userData, getUserData, handleDataChange}) {
           </div>
           </div>
           <br />
+          <div className="pet-status">
           <span>{petData.name} is feeling {personality}.</span>
           <br></br>
           {happiness <= 100 && happiness >= 80 && <span>{petData.name} is happy!</span>}
@@ -116,6 +117,7 @@ function ViewPet({userData, getUserData, handleDataChange}) {
           {hunger <= 75 && hunger >= 50 && <span>{petData.name} is a bit hungry.</span> }
           {hunger >= 25 && hunger < 50 && <span>{petData.name} is very hungry!</span>}
           {hunger >= 0 && hunger < 25 && <span>{petData.name} is starving!!!</span>}
+          </div>
           <div className="view-pet-buttons-container">
             <button onClick={raiseHappiness}>play!</button>
             <button onClick={raiseHunger}>feed</button>
