@@ -15,10 +15,10 @@ function CreatePet({userData, handleDataChange, getUserData}) {
   const accessToken = localStorage.getItem("token");
   let decodedToken;
 
-  console.log(userData)
+  console.log(userData, 'user data from create pet')
 
   useEffect(() => {
-    if (userData.pet === null) {
+    if (userData && userData.pet === null) {
       setUserHasPet(false)
     } else {
       navigate('/view-pet')
