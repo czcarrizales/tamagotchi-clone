@@ -64,7 +64,7 @@ function App() {
           <Route path="/register" exact element={<Register />} />
           <Route path="/create-pet" exact element={<CreatePet userData={userData} handleDataChange={handleDataChange} getUserData={getUserData} handleUserDataChange={handleUserDataChange} />} />
           <Route path="/view-pet" exact element={<ViewPet userData={userData} getUserData={getUserData} handleDataChange={handleDataChange} />} />
-          <Route path="/adopt" exact element={<Adopt getUserData={getUserData} handleDataChange={handleDataChange} />} />
+          <Route path="/adopt" exact element={<Adopt userData={userData} getUserData={getUserData} handleDataChange={handleDataChange} />} />
           {/* <Route path="/play" exact element={<Play />} /> */}
         </Routes>
       </BrowserRouter>
