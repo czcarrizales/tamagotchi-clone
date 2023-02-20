@@ -99,8 +99,6 @@ app.post('/api/pet', async (req, res) => {
         const pet = await Pet.create({
             name: req.body.name,
             personality: req.body.personality,
-            happiness: 100,
-            hunger: 100,
             imageSrc: req.body.imageSrc,
             adoptable: false
         })
