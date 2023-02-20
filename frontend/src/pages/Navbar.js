@@ -49,10 +49,10 @@ function Navbar({userData}) {
     if (token == null) {
       return (<div className="login-register">
         <li>
-              <a href="/login">Login</a>
+              <Link to="/login">Login</Link>
             </li>
             <li>
-              <a href="/register">Register</a>
+              <Link to="/register">Register</Link>
             </li>
       </div>)
     } else if (token) {
