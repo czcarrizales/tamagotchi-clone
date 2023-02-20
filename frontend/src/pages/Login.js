@@ -17,6 +17,7 @@ function Login() {
   });
   const [validUsername, setValidUsername] = useState(false)
   const [validPassword, setValidPassword] = useState(false)
+  const [emptyPassword, setEmptyPassword] = useState(false)
   const [loginFail, setLoginFail] = useState(false)
   const [loggingIn, setLoggingIn] = useState(false)
   const [userFound, setUserFound] = useState('')
@@ -42,6 +43,11 @@ function Login() {
 
   async function loginUser(event) {
     event.preventDefault();
+    if (loginState.password === '') {
+      setEmptyPassword(true)
+      return
+    }
+    if (!validPassword) {return}
     setLoggingIn(true)
     setLoginFail(false)
     setUserFound(false)
@@ -77,9 +83,10 @@ function Login() {
     const value = event.target.value;
     console.log(value)
     setLoginState({ ...loginState, [event.target.name]: value });
-    
+    if (loginState.password.length > 0) {
+      setEmptyPassword(false)
+    }
     console.log(loginState);
-    console.log(validPassword)
   }
 
   
@@ -104,6 +111,7 @@ function Login() {
           value={loginState.password}
           onChange={handleChange}
         ></input>
+        {emptyPassword && <span>Password cannot be empty.</span>}
         {!validPassword && <span>Invalid password! Must be at least 6 characters long!</span>}
         {loginFail && <span>Login failed. Check your username and/or password.</span>}
         {loggingIn ? <div>Logging in...</div> : <input type="submit" value="login"></input>}
