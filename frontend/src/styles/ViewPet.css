@@ -81,14 +81,12 @@
     .view-pet-container {
         display: flex;
         flex-direction: row;
-        border: 1px solid blue;
     }
 
     .view-pet-inner-container {
         display: flex;
         margin-left: 8em;
         margin-right: 8em;
-        border: 1px solid green;
     }
 
     .pet-details {
@@ -114,6 +112,5 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        border: 1px solid pink;
     }
 }
