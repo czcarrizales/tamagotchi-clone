@@ -35,10 +35,11 @@ app.post('/api/register', async (req, res) => {
 
 app.post('/api/login', async (req, res) => {
         const user = await User.findOne({
-            name: req.body.name,
+            name: req.body.name
         })
-
-        
+        if (user === null) {
+            return res.json({status: 'username not found'})
+        }
 
         const isPasswordValid = await bcrypt.compare(req.body.password, user.password)
 
