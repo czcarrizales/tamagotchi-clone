@@ -141,7 +141,7 @@ app.get('/api/adoptable-pets', async (req, res) => {
 
 app.put('/raise-happiness', async (req, res) => {
     try {
-        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {happiness: 1}}, {new: true})
+        const response = await Pet.findOneAndUpdate({_id: req.body._id}, {$inc: {happiness: 1}}, {upsert: true, runValidators: true, new: true})
         res.send(response)
         console.log(response)
     } catch (err) {
