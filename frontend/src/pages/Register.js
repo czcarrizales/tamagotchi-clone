@@ -31,12 +31,13 @@ function Register() {
     }
   }, [registerState])
 
-  // if(jwtDecode(token).exp * 1000 > Date.now()) {
-  //   return <Navigate to="/view-pet" />
-  //   console.log('you are already logged in my dude')
-  // } else {
-  //   console.log('they are not logged in')
-  // }
+  if (token) {
+    if (jwtDecode(token).exp * 1000 > Date.now()) {
+      return <Navigate to="/view-pet" />;
+    } else {
+      console.log("they are not logged in");
+    }
+  }
 
   async function registerUser(event) {
     event.preventDefault()
