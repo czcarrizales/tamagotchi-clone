@@ -18,6 +18,7 @@ function Login() {
   const [validUsername, setValidUsername] = useState(false)
   const [validPassword, setValidPassword] = useState(false)
   const [emptyPassword, setEmptyPassword] = useState(false)
+  const [emptyName, setEmptyName] = useState(false)
   const [loginFail, setLoginFail] = useState(false)
   const [loggingIn, setLoggingIn] = useState(false)
   const [userFound, setUserFound] = useState('')
@@ -43,6 +44,10 @@ function Login() {
 
   async function loginUser(event) {
     event.preventDefault();
+    if (loginState.name === '') {
+      setEmptyName(true)
+      return
+    }
     if (loginState.password === '') {
       setEmptyPassword(true)
       return
@@ -86,6 +91,9 @@ function Login() {
     if (loginState.password.length > 0) {
       setEmptyPassword(false)
     }
+    if (loginState.name.length > 0) {
+      setEmptyName(false)
+    }
     console.log(loginState);
   }
 
@@ -102,6 +110,7 @@ function Login() {
           value={loginState.name}
           onChange={handleChange}
         ></input>
+        {emptyName && <span>Username cannot be empty.</span>}
         {validUsername && <p>Invalid username!</p>}
         {userFound && <span>Username {userFound} not found.</span>}
         <input
