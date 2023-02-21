@@ -13,6 +13,7 @@ function CreatePet({userData, handleDataChange, getUserData}) {
   const [petPersonality, setPetPersonality] = useState("calm");
   const [petImage, setPetImage] = useState("");
   const accessToken = localStorage.getItem("token");
+  const names = ['Abigail', 'Adam', 'Angel', 'Aires', 'Ben', 'Bandit', 'Bryce', 'Belle', 'Bambi', 'Chelle', 'Cam', 'Cal', 'Darius', 'Daisy', 'Elle', 'Eddie', 'Faye', 'Fredrick', 'Greg', 'Gladys', 'Henry', 'Hazel', 'Indy', 'Izzy', 'Ivory', 'Jackie', 'Jackson', 'Jerry', 'Kari', 'Kendell', 'Lindsey', 'Liam', 'Lucky', 'Max', 'Molly', 'Natasha', 'Namor', 'Oskar', 'Olly', 'Peanut', 'Penny', 'Pearl', 'Quincy', 'Quinn', 'Riri', 'Ray', 'Sara', 'Shelly', 'Sky', 'Simon', 'Trent', 'Trinity', 'Uly', 'Varys', 'Vivian', 'Wendy', 'Wes', 'Wrinkles', 'Xavier', 'Xeon', 'Yin', 'Yang', 'Yelp', 'Zeke', 'Zeus', 'Zell']
   let decodedToken;
 
 
@@ -109,17 +110,19 @@ function CreatePet({userData, handleDataChange, getUserData}) {
     navigate('/view-pet')
   }
 
+  function getNames() {
+    return names.map((name) => {
+      return <option value={name}>{name}</option>
+    })
+  }
+
   return (
     <div className="dashboard-container">
       <h2>Create a pet!</h2>
       <h3>Name</h3>
-      <input
-        type="text"
-        placeholder="Name"
-        name="name"
-        value={petName}
-        onChange={handlePetNameChange} className="dashboard-container-name"
-      ></input>
+      <select onChange={handlePetNameChange} value={petName} className='dashboard-container-name'>
+      {getNames()}
+      </select>
       <br />
       <h3>Personality</h3>
       <select onChange={handlePetPersonalityChange} value={petPersonality}>
