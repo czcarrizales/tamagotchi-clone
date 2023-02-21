@@ -30,3 +30,10 @@
     margin: 0 4em;
     color: rgb(184, 0, 0);
 }
+
+@media(min-width: 1000px) {
+    .login-container {
+        width: 50%;
+        margin: auto;
+    }
+}
