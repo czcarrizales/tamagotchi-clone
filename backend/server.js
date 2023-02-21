@@ -48,7 +48,7 @@ app.post('/api/login', async (req, res) => {
                 name: req.body.name,
                 pet: user.pet,
                 _id: user._id
-            }, 'secret123', {expiresIn: 60 * 60})
+            }, 'secret123', {expiresIn: 60})
             console.log('found a matching email and password')
             return res.json({status: 'ok, found a matching email and password', user: token})
             
