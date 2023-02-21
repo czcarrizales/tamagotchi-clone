@@ -18,10 +18,16 @@
     scale: 1.2;
 }
 
-.login-register {
+.login-nav {
     display: flex;
     justify-content: space-evenly;
     width: 100%;
+}
+
+.pet-nav {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
 }
 
 @media (min-width: 1000px) {
