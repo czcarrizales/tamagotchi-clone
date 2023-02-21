@@ -4,7 +4,7 @@ import "../styles/Navbar.css";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 
-function Navbar({userData}) {
+function Navbar({userData, getUserData, handleDataChange}) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate()
   const [userHasPet, setUserHasPet] = useState(false)
@@ -39,10 +39,11 @@ function Navbar({userData}) {
   function logout() {
     localStorage.clear()
     axios.get('https://tamagotchi-clone-api.onrender.com/logout')
-      .then(
-        console.log('logged out from front end')
-        )
-        .then(navigate('/login'))
+        .then(() => {
+          handleDataChange('data changed from logging out')
+          getUserData()
+          navigate('/login')
+        })
   }
 
   function isLoggedIn() {
