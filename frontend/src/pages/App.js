@@ -54,11 +54,11 @@ function App() {
 
   return (
     <div className="app-container">
-      {token ? <h1 className="app-welcome">Welcome {decodedToken && decodedToken.name}!</h1> : <h1 className="app-welcome">Welcome!</h1> }
+      {token ? <h1 className="app-welcome">Welcome {userData && userData.name}!</h1> : <h1 className="app-welcome">Welcome!</h1> }
       {
         (userData || userData === undefined) && (
 <BrowserRouter>
-      <Navbar userData={userData} />
+      <Navbar userData={userData} getUserData={getUserData} handleDataChange={handleDataChange} />
         <Routes>
           {['/', '/login'].map(path => <Route path={path} exact element={<Login />} />)}
           <Route path="/register" exact element={<Register />} />
