@@ -48,7 +48,7 @@ function Navbar({userData, getUserData, handleDataChange}) {
 
   function isLoggedIn() {
     if (token == null) {
-      return (<div className="login-register">
+      return (<div className="login-nav">
         <li>
               <Link to="/login">Login</Link>
             </li>
@@ -58,7 +58,7 @@ function Navbar({userData, getUserData, handleDataChange}) {
       </div>)
     } else if (token) {
       return (
-        <div>
+        <div className="login-nav">
           <li>
             <a href="#" onClick={logout}>Logout</a>
           </li>
@@ -71,7 +71,7 @@ function Navbar({userData, getUserData, handleDataChange}) {
     if (token && userData) {
       if (!userHasPet) {
         return (
-          <div>
+          <div className="pet-nav">
             <li>
               <Link to="/create-pet">Create</Link>
             </li>
@@ -82,7 +82,7 @@ function Navbar({userData, getUserData, handleDataChange}) {
         );
       } else {
         return (
-          <div>
+          <div className="pet-nav">
             <li>
               <a href="/view-pet">Pet</a>
             </li>
