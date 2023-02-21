@@ -15,7 +15,6 @@ function CreatePet({userData, handleDataChange, getUserData}) {
   const accessToken = localStorage.getItem("token");
   let decodedToken;
 
-  console.log(userData, 'user data from create pet')
 
   useEffect(() => {
     if (userData && userData.pet === null) {
@@ -29,9 +28,7 @@ function CreatePet({userData, handleDataChange, getUserData}) {
   useEffect(() => {
     if (accessToken) {
       decodedToken = jwtDecode(accessToken, 'token')
-      console.log(decodedToken)
       if (decodedToken.exp * 1000 < Date.now()) {
-        console.log('token is expired')
         localStorage.removeItem('token')
         navigate('/login')
       }
@@ -73,12 +70,6 @@ function CreatePet({userData, handleDataChange, getUserData}) {
     console.log(petPersonality, 'pet personality')
   }, [])
 
-  function setValue(event) {
-    setTempQuote(event.target.value);
-    console.log(event);
-    console.log(tempQuote);
-  }
-
   function handlePetNameChange(event) {
     setPetName(event.target.value);
     console.log(event.target.value);
@@ -99,7 +90,6 @@ function CreatePet({userData, handleDataChange, getUserData}) {
     const confirmation = window.confirm('are you sure you wanna adopt?')
 
     if (confirmation) {
-      console.log("adopted pet!");
       authAxios
         .post("/api/pet", {
           name: petName,
@@ -110,7 +100,6 @@ function CreatePet({userData, handleDataChange, getUserData}) {
           handleDataChange('data changed from create-pet')
           getUserData()
           navigateToPet()
-          console.log(res);
         });
       
     } 
