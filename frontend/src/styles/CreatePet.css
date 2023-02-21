@@ -49,3 +49,11 @@
     scale: 1.1;
     cursor: pointer;
 }
+
+@media(min-width: 1000px) {
+    .pet-image-select {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}
