@@ -6,6 +6,7 @@
 
 .view-pet-container span {
     background-color: inherit;
+    text-align: center;
 }
 
 .view-pet-container h1 {
