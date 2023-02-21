@@ -125,7 +125,7 @@ function ViewPet({userData, getUserData, handleDataChange}) {
           </div>
         </div>
       )}
-      {petData == undefined && <p>Loading...</p>}
+      {petData == undefined && <span>Loading...</span>}
     </div>
   );
 }
