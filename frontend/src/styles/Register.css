@@ -29,3 +29,10 @@
 .register-container span {
     color: rgb(184, 0, 0);
 }
+
+@media (min-width: 1000px) {
+    .register-container {
+        width: 50%;
+        margin: auto;
+    }
+}
