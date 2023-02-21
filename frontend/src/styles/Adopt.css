@@ -36,3 +36,7 @@
 .adopt-component-container {
     text-align: center;
 }
+
+.adopt-component-container h1 {
+    margin-top: 1em;
+}
