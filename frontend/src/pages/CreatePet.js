@@ -87,7 +87,7 @@ function CreatePet({userData, handleDataChange, getUserData}) {
   }
 
   function adopt() {
-    const confirmation = window.confirm('are you sure you wanna adopt?')
+    const confirmation = window.confirm('Are you sure you want to create?')
 
     if (confirmation) {
       authAxios
@@ -109,29 +109,8 @@ function CreatePet({userData, handleDataChange, getUserData}) {
     navigate('/view-pet')
   }
 
-  function confirmAdoption() {
-    return (
-      <div>
-        hello my dear!
-      </div>
-    )
-  }
-
-
   return (
     <div className="dashboard-container">
-      {/* <h1>Your quote: {quote || "YOU DO NOT HAVE A GOT DANG QUOTE!!!"}</h1>
-      <form onSubmit={updateQuote}>
-        <input
-          type="text"
-          placeholder="quote"
-          name="quote"
-          value={tempQuote}
-          onChange={setValue}
-        ></input>
-        <input type="submit" value="update quote"></input>
-      </form>
-      <br/> */}
       <h2>Create a pet!</h2>
       <h3>Name</h3>
       <input
