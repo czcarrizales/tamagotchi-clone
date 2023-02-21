@@ -130,9 +130,15 @@ function CreatePet({userData, handleDataChange, getUserData}) {
       <h3>Personality</h3>
       <select onChange={handlePetPersonalityChange} value={petPersonality} className='dashboard-container-personality'>
         <option defaultValue="calm">Calm</option>
+        <option value="adventurous">Adventurous</option>
         <option value="brave">Brave</option>
+        <option value="curious">Curious</option>
+        <option value="friendly">Friendly</option>
+        <option value="lazy">Lazy</option>
+        <option value="loving">Loving</option>
         <option value="intelligent">Intelligent</option>
         <option value="mischevious">Mischevious</option>
+        <option value="wild">Wild</option>
       </select>
       <br />
       <h3>Select A Pet </h3>
