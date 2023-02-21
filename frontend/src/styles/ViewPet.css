@@ -29,7 +29,7 @@
 
 .view-pet-container button:hover {
     cursor: pointer;
-    scale: 1.1;
+    transform: scale(1.1)
 }
 
 .view-pet-container img {
@@ -45,7 +45,6 @@
     justify-content: center;
     align-items: center;
     font-size: 30px;
-    margin-top: 1em;
 }
 
 .pet-stat {
@@ -84,8 +83,8 @@
 
     .view-pet-inner-container {
         display: flex;
-        margin-left: 8em;
-        margin-right: 8em;
+        margin-left: 7em;
+        margin-right: 7em;
     }
 
     .pet-details {
