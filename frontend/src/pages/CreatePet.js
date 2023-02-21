@@ -129,7 +129,7 @@ function CreatePet({userData, handleDataChange, getUserData}) {
         <option value="mischevious">Mischevious</option>
       </select>
       <br />
-      <div>
+      <div className="pet-image-select">
         <h3>Select a pet </h3>
         <div>
           <input
